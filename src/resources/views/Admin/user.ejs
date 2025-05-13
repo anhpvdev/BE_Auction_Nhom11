@@ -24,23 +24,24 @@
                         <thead>
                             <th style="width: 20%;">Họ & tên</th>
                             <th style="width: 15%;">Email</th>
-                            <th style="width: 13%;">CCCD</th>
+                            <th style="width: 13%;">Bid</th>
                             <th style="width: 12%;">Số điện thoại</th>
                             <th style="width: 10%;">Đối tượng</th>
                             <th style="width: 20%;">Hành động</th>
                         </thead>
                         <tbody>
+                              <%for(let i=0; i< list.length;i++){ %>
                             <tr>
                                 <td>
                                     <div class="d-flex justify-content-center align-items-center gap-3">
-                                        <img src="./images/user1.png" class="rounded" style="width: 70px; height: 70px;" alt="">
-                                        <span>Quân Kudo</span>
+                                        <img src="/public/images/user/<%=list[i].Avatar%>" class="rounded" style="width: 70px; height: 70px;" alt="">
+                                        <span><%=list[i].HoVaTen%></span>
                                     </div>
                                 </td>
-                                <td class="text-center">quannguyen2004aa@gmail.com</td>
-                                <td class="text-center">0400 2349 4739</td>
-                                <td class="text-center">0983819273</td>
-                                <td class="text-center">Khách hàng</td>
+                                <td class="text-center"><%=list[i].Email%></td>
+                                <td class="text-center"><%=list[i].Bid%></td>
+                                <td class="text-center"><%=list[i].SoDienThoai%></td>
+                                <td class="text-center"><%=list[i].VaiTro%></td>
                                 <td>
                                     <div class="d-flex gap-2">
                                         <button class="flex-fill px-3 py-2 rounded text-white dark-blue-bg-color">Sửa</button>
@@ -48,78 +49,8 @@
                                     </div>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>
-                                    <div class="d-flex justify-content-center align-items-center gap-3">
-                                        <img src="./images/user1.png" class="rounded" style="width: 70px; height: 70px;" alt="">
-                                        <span>Quân Kudo</span>
-                                    </div>
-                                </td>
-                                <td class="text-center">quannguyen2004aa@gmail.com</td>
-                                <td class="text-center">0400 2349 4739</td>
-                                <td class="text-center">0983819273</td>
-                                <td class="text-center">Khách hàng</td>
-                                <td>
-                                    <div class="d-flex gap-2">
-                                        <button class="flex-fill px-3 py-2 rounded text-white dark-blue-bg-color">Sửa</button>
-                                        <button class="flex-fill px-3 py-2 rounded text-white" style="background-color: rgb(12, 136, 5);">Xem</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="d-flex justify-content-center align-items-center gap-3">
-                                        <img src="./images/user1.png" class="rounded" style="width: 70px; height: 70px;" alt="">
-                                        <span>Quân Kudo</span>
-                                    </div>
-                                </td>
-                                <td class="text-center">quannguyen2004aa@gmail.com</td>
-                                <td class="text-center">0400 2349 4739</td>
-                                <td class="text-center">0983819273</td>
-                                <td class="text-center">Khách hàng</td>
-                                <td>
-                                    <div class="d-flex gap-2">
-                                        <button class="flex-fill px-3 py-2 rounded text-white dark-blue-bg-color">Sửa</button>
-                                        <button class="flex-fill px-3 py-2 rounded text-white" style="background-color: rgb(12, 136, 5);">Xem</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="d-flex justify-content-center align-items-center gap-3">
-                                        <img src="./images/user1.png" class="rounded" style="width: 70px; height: 70px;" alt="">
-                                        <span>Quân Kudo</span>
-                                    </div>
-                                </td>
-                                <td class="text-center">quannguyen2004aa@gmail.com</td>
-                                <td class="text-center">0400 2349 4739</td>
-                                <td class="text-center">0983819273</td>
-                                <td class="text-center">Khách hàng</td>
-                                <td>
-                                    <div class="d-flex gap-2">
-                                        <button class="flex-fill px-3 py-2 rounded text-white dark-blue-bg-color">Sửa</button>
-                                        <button class="flex-fill px-3 py-2 rounded text-white" style="background-color: rgb(12, 136, 5);">Xem</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="d-flex justify-content-center align-items-center gap-3">
-                                        <img src="./images/user1.png" class="rounded" style="width: 70px; height: 70px;" alt="">
-                                        <span>Quân Kudo</span>
-                                    </div>
-                                </td>
-                                <td class="text-center">quannguyen2004aa@gmail.com</td>
-                                <td class="text-center">0400 2349 4739</td>
-                                <td class="text-center">0983819273</td>
-                                <td class="text-center">Khách hàng</td>
-                                <td>
-                                    <div class="d-flex gap-2">
-                                        <button class="flex-fill px-3 py-2 rounded text-white dark-blue-bg-color">Sửa</button>
-                                        <button class="flex-fill px-3 py-2 rounded text-white" style="background-color: rgb(12, 136, 5);">Xem</button>
-                                    </div>
-                                </td>
-                            </tr>
+                            <%} %>
+                            
                         </tbody>
                     </table>
                 </div>  

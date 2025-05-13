@@ -28,7 +28,7 @@
                             <th style="width: 5%;">ID</th>
                             <th style="width: 35%;">Nội dung</th>
                             <th style="width: 15%;">Người đăng</th>
-                            <th style="width: 20%;">Thời gian bắt đầu</th>
+                            <th style="width: 20%;">Thời gian</th>
                             <th style="width: 20%;">Hành động</th>
                         </thead>
                         <tbody>
@@ -43,10 +43,13 @@
                                     </div>
                                 </td>
                                 <td class="text-center"><%-list[i].HoVaTen%></td>
-                                <td class="text-center"><%-list[i].NgayBatDau%></td>
+                                <td class="text-center"><%-list[i].NgayDangKy%></td>
                                 <td>
                                     <div class="d-flex gap-2">
-                                        <a href="/admin/auction/<%=list[i].MaSanPham%>" class="flex-fill px-3 py-2">
+                                        <a class="flex-fill px-3 py-2">
+                                        <button class="flex-fill px-3 py-2 rounded text-white dark-blue-bg-color">Duyệt</button>
+                                        </a>
+                                        <a href="/admin/accept/<%=list[i].MaSanPham%>" class="flex-fill px-3 py-2">
                                         <button class="flex-fill px-3 py-2 rounded text-white" style="background-color: rgb(12, 136, 5);">Xem</button>
                                         </a>
                                     </div>

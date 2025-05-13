@@ -7,8 +7,8 @@
                 </div>
                 <hr />
     
-                <ul class="d-flex flex-column gap-3">
-                    <li class="hover-li d-flex gap-3 align-items-center px-4 py-2 button_active">
+                <ul class="navbar_mn d-flex flex-column gap-3">
+                    <li class="hover-li d-flex gap-3 align-items-center px-4 py-2">
                         <a href="/admin/" class="adm_navbar">
                             <i class="fa-solid fa-cube"></i>
                             <span class="text fs-6">Thống kê</span>
@@ -27,7 +27,7 @@
                         </a>
                     </li>
                     <li class="hover-li d-flex gap-3 align-items-center px-4 py-2">
-                        <a href="" class="adm_navbar">
+                        <a href="/admin/accept" class="adm_navbar">
                              <i class="fa-solid fa-cube"></i>
                             <span class="text fs-6">Thông báo</span>
                         </a>
@@ -39,3 +39,17 @@
                 </div>
             </div>
         </div>
+
+        <script>
+            const navbarItems = document.querySelectorAll('.navbar_mn li');
+            var path_URL = location.pathname;
+            if(path_URL == "/admin/"){
+                navbarItems[0].classList.add('button_active');
+            }else if(path_URL == "/admin/user"){
+                navbarItems[1].classList.add('button_active');  
+            }else if(path_URL == "/admin/product"){
+                navbarItems[2].classList.add('button_active');
+            }else if(path_URL == "/admin/accept"){
+                navbarItems[3].classList.add('button_active');
+            }
+        </script>

@@ -5,6 +5,8 @@ const cookieParser = require('cookie-parser');
 
 // const { match } = require('assert');
 const UserModel = require("../Model/user")
+const AuctionModel = require("../Model/auction")
+
 const stripe = require('stripe')(process.env.PAY_SECRET);
 const crypto = require('crypto');
 // const { url, console } = require('inspector');
@@ -135,7 +137,8 @@ const UserServices = {
     
      
     },
-    
+  
+
     userInfo_post:async (req, res) => {
       try{
         const userID = req.user?.MaNguoiDung
@@ -243,10 +246,34 @@ const UserServices = {
       }
     
   },
-  auction_now:async (req, res) => {
+
+  auction_detail:async (req, res) => {
       try{
        const user = req.user
-        return res.render("Users/auction_now.ejs",{user:user})
+       const ID = req.params.id
+
+        const aution = await AuctionModel.auction_detail(ID)
+
+        if(!aution || aution.MaNguoiMua != user.MaNguoiDung  ) return res.render("401.ejs")
+
+        return res.render("Users/auction_update.ejs",{user:user,info:aution})
+      }catch(err){
+        console.log(err)
+        return res.render("err.ejs")
+      }
+    
+  },
+
+
+  auction_now:async (req, res) => {
+      try{
+        const user = req.user
+        const category = req.params.id
+        const type = req.query.type || 1
+
+        const list = await  AuctionModel.all_auction_work(1,type,category)
+
+        return res.render("Users/auction_now.ejs",{user:user,list:list})
       }catch(err){
         console.log(err)
         return res.render("err.ejs")
@@ -257,11 +284,9 @@ const UserServices = {
   auction_post:async (req, res) => {
       try{
        const userID = req.user.MaNguoiDung
-       const {title,content,open,close,price} = req.body
-       console.log(title,content)
-       console.log(open,close,price)
+       const {title,content,open,close,price,step} = req.body
 
-       const auction = await UserModel.addAuction(userID,title,content,open,close,price)
+       const auction = await UserModel.addAuction(userID,title,content,open,close,price,step)
 
        if(auction.affectedRows < 1) return res.render("err.ejs")
 
@@ -273,7 +298,24 @@ const UserServices = {
     
   },
 
+  auction_update:async (req, res) => {
+      try{
+       const userID = req.user.MaNguoiDung
+       const {auctionID,title,content,open,close,price,step} = req.body
+       console.log(title,content)
+       console.log(open,close,price)
 
+       const auction = await UserModel.updateAuction(auctionID,title,content,open,close,price,step)
+
+       if(auction.affectedRows < 1) return res.render("err.ejs")
+
+        return res.redirect('/')
+      }catch(err){
+        console.log(err)
+        return res.render("err.ejs")
+      }
+    
+  },
 
 
   

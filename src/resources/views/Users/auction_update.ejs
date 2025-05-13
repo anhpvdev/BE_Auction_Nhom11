@@ -24,43 +24,51 @@
                 <h4 class="dark-blue-color text fs-4 fw-semibold">GÓI BIRDS</h4>
             </div>
 
-            <form action="/user/auction" method="post" class="mt-4 d-flex gap-5">
+            <form action="/user/auction/update" method="post" class="mt-4 d-flex gap-5">
                 <div>
                     <h4 class="text fs-5">Yêu cầu</h4>
                       <div class="d-flex flex-column gap-2">
                             <label for="">Tiêu đề</label>
-                            <input type="text" name="title" id="" placeholder="Tiêu đề ..." 
+                            <input type="text" name="title" id="" placeholder="Tiêu đề ..." value="<%= info.TieuDe %>" 
                                 style="border: 1px solid #989696;" class="rounded p-2">
                         </div>
-                    <div id="editor-container" style="height: 300px;"></div>
+                    <div id="editor-container" style="height: 300px;">
+                        <%- info.MoTa %>
+                    </div>
                 </div>
-                <input type="hidden" name="content" id="editor_content" >
+                <input type="hidden" name="content" id="editor_content" value="<%= info.MoTa %>" >
+                <input type="hidden" name="auctionID" value="<%= info.MaSanPham %>">
                 <div style="width: 20rem;">
                     <h4 class="text fs-5">Thời gian đấu giá</h4>
                     <div class="d-flex gap-3 flex-column border border-secondary-subtle p-3">
                         <div class="d-flex flex-column gap-2">
-                            <label for="">Bắt đầu</label>
-                            <input type="datetime-local" name="open" id="" placeholder="dd/MM/yyyy" 
+                            <label for="">Bắt đầu</label> 
+                            <input type="datetime-local" name="open" id="" placeholder="dd/MM/yyyy"  value="<%= info.NgayBatDau %>"
                                 style="border: 1px solid #989696;" class="rounded p-2">
                         </div>
                         <div class="d-flex flex-column gap-2">
                             <label for="">Kết thúc</label>
-                            <input type="datetime-local" name="close" id="" placeholder="dd/MM/yyyy"
+                            <input type="datetime-local" name="close" id="" placeholder="dd/MM/yyyy" value="<%= info.NgayKetThuc %>"
                                 style="border: 1px solid #989696;" class="rounded p-2">
                         </div>
                         <div class="d-flex flex-column gap-2">
                             <label for="">Số tiền</label>
-                            <input type="number" name="price" id="" min="0" placeholder="0"
+                            <input type="number" name="price" id="" min="0" placeholder="0" value="<%= info.NganSachToiDa %>"
                                 style="border: 1px solid #989696;" class="rounded p-2">
                         </div>
                         <div class="d-flex flex-column gap-2">
+                            <label for="">Trạng thái</label>
+                            <input type="text" value="<%= info.TrangThai == 0 ? 'Chờ xử lý': 'Đã được duyệt' %>"
+                                style="border: 1px solid #989696;" class="rounded p-2" readonly>
+                        </div>
+                        <div class="d-flex flex-column gap-2">
                             <label for="">Bước giá</label>
-                            <input type="number" name="step" id="" min="0" placeholder="0"
+                            <input type="number" name="step" id="" min="0" value="<%= info.BuocGia %>"
                                 style="border: 1px solid #989696;" class="rounded p-2">
                         </div>
                     </div>
                     <button class="button-primary block px-3 py-2 w-100 mt-4" id="btn-submit" type="submit">
-                        Đăng bài
+                        Cập nhật
                     </button>
                 </div>
             </form>
