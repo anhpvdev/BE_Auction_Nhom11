@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th5 13, 2025 lúc 11:51 AM
+-- Thời gian đã tạo: Th5 13, 2025 lúc 04:58 PM
 -- Phiên bản máy phục vụ: 10.4.27-MariaDB
 -- Phiên bản PHP: 8.2.0
 
@@ -31,6 +31,16 @@ CREATE TABLE `danhmuc` (
   `MaDanhMuc` int(11) NOT NULL,
   `TenDanhMuc` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `danhmuc`
+--
+
+INSERT INTO `danhmuc` (`MaDanhMuc`, `TenDanhMuc`) VALUES
+(1, 'Phần mềm'),
+(2, 'Xây dựng'),
+(3, 'Đồ gia dụng'),
+(4, 'Thời trang');
 
 -- --------------------------------------------------------
 
@@ -90,7 +100,10 @@ CREATE TABLE `nguoidung` (
 
 INSERT INTO `nguoidung` (`MaNguoiDung`, `MaPhuongXa`, `HoVaTen`, `Mota`, `Email`, `MatKhau`, `SoDienThoai`, `DiaChi`, `Avatar`, `Bid`, `NgaySinh`, `GioiTinh`, `TrangThai`, `VaiTro`, `NgayTao`) VALUES
 (1, NULL, 'Admin', NULL, 'nhom11@gmail.com', '123123', NULL, NULL, 'default.jpg', 100, NULL, 'Nam', 1, 'Admin', '2025-05-13 04:58:37'),
-(2, NULL, 'Quan Nguyen', NULL, 'maviess10@gmail.com', '123123', NULL, NULL, 'default.jpg', 200, NULL, NULL, 1, 'User', '2025-05-13 05:00:41');
+(2, NULL, 'Quan Nguyen', NULL, 'maviess10@gmail.com', '123123', NULL, NULL, 'default.jpg', 180, NULL, NULL, 1, 'User', '2025-05-13 05:00:41'),
+(3, NULL, 'UserName', NULL, 'a@gmail.com', '123123', NULL, NULL, 'default.jpg', 0, NULL, NULL, 1, 'User', '2025-05-13 10:12:37'),
+(4, NULL, 'UserName', NULL, 'b@gmail.com', '123123', NULL, NULL, 'default.jpg', 0, NULL, NULL, 1, 'User', '2025-05-13 10:12:53'),
+(5, NULL, 'UserName', NULL, 'c@gmail.com', '123123', NULL, NULL, 'default.jpg', 0, NULL, NULL, 1, 'User', '2025-05-13 10:13:00');
 
 -- --------------------------------------------------------
 
@@ -102,10 +115,19 @@ CREATE TABLE `phiendaugia` (
   `MaPhienDauGia` int(11) NOT NULL,
   `MaNhanVien` int(11) DEFAULT NULL,
   `MaSanPham` int(11) DEFAULT NULL,
-  `TrangThaiHoatDong` tinyint(4) DEFAULT 1,
+  `TrangThai` tinyint(4) DEFAULT 1,
   `TrangThaiXoa` tinyint(4) DEFAULT 0,
   `GiaThapNhat` decimal(18,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `phiendaugia`
+--
+
+INSERT INTO `phiendaugia` (`MaPhienDauGia`, `MaNhanVien`, `MaSanPham`, `TrangThai`, `TrangThaiXoa`, `GiaThapNhat`) VALUES
+(2, 1, 3, 1, 0, '0.00'),
+(3, 1, 2, 1, 0, '0.00'),
+(4, 1, 4, 0, 0, '0.00');
 
 -- --------------------------------------------------------
 
@@ -214,6 +236,7 @@ CREATE TABLE `sanphamdangky` (
   `TieuDe` varchar(255) NOT NULL,
   `MoTa` text DEFAULT NULL,
   `NganSachToiDa` decimal(18,2) NOT NULL,
+  `BuocGia` decimal(18,0) NOT NULL DEFAULT 0,
   `TrangThai` int(11) DEFAULT 0,
   `NgayDangKy` timestamp NOT NULL DEFAULT current_timestamp(),
   `NgayBatDau` datetime DEFAULT NULL,
@@ -225,11 +248,11 @@ CREATE TABLE `sanphamdangky` (
 -- Đang đổ dữ liệu cho bảng `sanphamdangky`
 --
 
-INSERT INTO `sanphamdangky` (`MaSanPham`, `MaNguoiMua`, `MaDanhMuc`, `TieuDe`, `MoTa`, `NganSachToiDa`, `TrangThai`, `NgayDangKy`, `NgayBatDau`, `NgayKetThuc`, `PhanHoi`) VALUES
-(1, 2, NULL, 'Mua nhà', '<p><strong>asdasdasdsaasd</strong></p><ol><li>123123</li><li>123123</li><li>123123</li><li>22asda</li></ol>', '1000000.00', 0, '2025-05-13 08:29:42', '2025-05-13 15:29:00', '2025-05-27 15:29:00', NULL),
-(2, 2, NULL, 'Mua nhà', '<p><strong>asdasdasdsaasd</strong></p><ol><li>123123</li><li>123123</li><li>123123</li><li>22asda</li></ol>', '100000000.00', 0, '2025-05-13 08:30:32', '2025-05-13 15:29:00', '2025-05-27 15:29:00', NULL),
-(3, 2, NULL, 'Xây nhà', '<p><strong>ádasda123</strong></p><ol><li>123123123</li><li>ádasd</li><li>ádasd</li><li>ádasd</li><li>ád</li><li><br></li></ol>', '100000000.00', 0, '2025-05-13 08:50:51', '2025-05-14 15:50:00', '2025-05-27 15:29:00', NULL),
-(4, 2, NULL, 'test', '<p>ádasdasasdasdsa</p><p>ádasd</p><p>áda</p><p>ds</p>', '9999999.00', 0, '2025-05-13 08:52:41', '2025-05-13 19:52:00', '2025-05-20 15:52:00', NULL);
+INSERT INTO `sanphamdangky` (`MaSanPham`, `MaNguoiMua`, `MaDanhMuc`, `TieuDe`, `MoTa`, `NganSachToiDa`, `BuocGia`, `TrangThai`, `NgayDangKy`, `NgayBatDau`, `NgayKetThuc`, `PhanHoi`) VALUES
+(1, 2, 2, 'Mua nhà Cowx lown', '<p><strong>asdasdasdsaasd</strong></p><ol><li>123123</li><li>123123</li><li>123123</li><li>22asda</li></ol>', '1000000.00', '100', 0, '2025-05-13 08:29:42', '2025-05-13 15:29:00', '2025-05-27 15:29:00', NULL),
+(2, 2, 2, 'Xây nhà 400m2', '<p><strong>asdasdasdsaasd 123</strong></p><ol><li>123123</li><li>123123</li><li>123123</li><li>22asda</li></ol>', '100000000.00', '50', 1, '2025-05-13 08:30:32', '2025-05-13 15:29:00', '2025-05-27 15:29:00', NULL),
+(3, 2, 2, 'Mua 3 tấn vật liệu', '<p><strong>ádasda123</strong></p><ol><li>123123123</li><li>ádasd</li><li>ádasd</li><li>ádasd</li><li>ád</li><li><br></li></ol>', '123123.00', '100', 1, '2025-05-13 08:50:51', '2025-05-14 15:50:00', '2025-05-26 15:29:00', NULL),
+(4, 2, 2, 'test', '<p>ádasdasasdasdsa</p><p>ádasd</p><p>áda</p><p>ds</p>', '9999999.00', '0', 1, '2025-05-13 08:52:41', '2025-05-06 19:52:00', '2025-05-13 21:40:00', NULL);
 
 -- --------------------------------------------------------
 
@@ -257,6 +280,22 @@ INSERT INTO `thanhtoan` (`MaThanhToan`, `MaNguoiDung`, `NoiDung`, `Key`, `TrangT
 
 -- --------------------------------------------------------
 
+--
+-- Cấu trúc bảng cho bảng `thongtinthanhtoan`
+--
+
+CREATE TABLE `thongtinthanhtoan` (
+  `MaNguoiDung` int(11) NOT NULL,
+  `MaSoThue` varchar(50) DEFAULT NULL,
+  `NgayDangKy` timestamp NOT NULL DEFAULT current_timestamp(),
+  `TenTaiKhoan` varchar(255) DEFAULT NULL,
+  `SoThe` varchar(50) DEFAULT NULL,
+  `NganHang` varchar(255) DEFAULT NULL,
+  `NgayHetHan` date DEFAULT NULL,
+  `CVV` varchar(10) DEFAULT NULL,
+  `DiaChiThanhToan` text DEFAULT NULL,
+  `TrangThai` tinyint(4) DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -297,8 +336,8 @@ ALTER TABLE `nguoidung`
 --
 ALTER TABLE `phiendaugia`
   ADD PRIMARY KEY (`MaPhienDauGia`),
-  ADD KEY `MaSanPham` (`MaSanPham`),
-  ADD KEY `FK_PhienDauGia_NguoiDung` (`MaNhanVien`);
+  ADD KEY `phiendaugia_ibfk_1` (`MaNhanVien`),
+  ADD KEY `phiendaugia_ibfk_2` (`MaSanPham`);
 
 --
 -- Chỉ mục cho bảng `phuongxa`
@@ -328,6 +367,12 @@ ALTER TABLE `thanhtoan`
   ADD PRIMARY KEY (`MaThanhToan`),
   ADD KEY `MaNguoiDung` (`MaNguoiDung`);
 
+--
+-- Chỉ mục cho bảng `thongtinthanhtoan`
+--
+ALTER TABLE `thongtinthanhtoan`
+  ADD PRIMARY KEY (`MaNguoiDung`),
+  ADD UNIQUE KEY `SoThe` (`SoThe`);
 
 --
 -- AUTO_INCREMENT cho các bảng đã đổ
@@ -337,7 +382,7 @@ ALTER TABLE `thanhtoan`
 -- AUTO_INCREMENT cho bảng `danhmuc`
 --
 ALTER TABLE `danhmuc`
-  MODIFY `MaDanhMuc` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `MaDanhMuc` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT cho bảng `hinhanh`
@@ -355,13 +400,13 @@ ALTER TABLE `lichsudaugia`
 -- AUTO_INCREMENT cho bảng `nguoidung`
 --
 ALTER TABLE `nguoidung`
-  MODIFY `MaNguoiDung` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `MaNguoiDung` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT cho bảng `phiendaugia`
 --
 ALTER TABLE `phiendaugia`
-  MODIFY `MaPhienDauGia` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `MaPhienDauGia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT cho bảng `phuongxa`
@@ -379,7 +424,7 @@ ALTER TABLE `quanhuyen`
 -- AUTO_INCREMENT cho bảng `sanphamdangky`
 --
 ALTER TABLE `sanphamdangky`
-  MODIFY `MaSanPham` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `MaSanPham` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT cho bảng `thanhtoan`
@@ -414,8 +459,7 @@ ALTER TABLE `nguoidung`
 -- Các ràng buộc cho bảng `phiendaugia`
 --
 ALTER TABLE `phiendaugia`
-  ADD CONSTRAINT `FK_PhienDauGia_NguoiDung` FOREIGN KEY (`MaNhanVien`) REFERENCES `nguoidung` (`MaNguoiDung`),
-  ADD CONSTRAINT `phiendaugia_ibfk_1` FOREIGN KEY (`MaNhanVien`) REFERENCES `daugianguoc`.`nhanvien` (`MaNhanVien`) ON DELETE SET NULL,
+  ADD CONSTRAINT `phiendaugia_ibfk_1` FOREIGN KEY (`MaNhanVien`) REFERENCES `nguoidung` (`MaNguoiDung`) ON DELETE SET NULL,
   ADD CONSTRAINT `phiendaugia_ibfk_2` FOREIGN KEY (`MaSanPham`) REFERENCES `sanphamdangky` (`MaSanPham`) ON DELETE CASCADE;
 
 --
@@ -437,7 +481,23 @@ ALTER TABLE `sanphamdangky`
 ALTER TABLE `thanhtoan`
   ADD CONSTRAINT `ThanhToan_ibfk_1` FOREIGN KEY (`MaNguoiDung`) REFERENCES `nguoidung` (`MaNguoiDung`) ON DELETE CASCADE;
 
+--
+-- Các ràng buộc cho bảng `thongtinthanhtoan`
+--
+ALTER TABLE `thongtinthanhtoan`
+  ADD CONSTRAINT `thongtinthanhtoan_ibfk_1` FOREIGN KEY (`MaNguoiDung`) REFERENCES `nguoidung` (`MaNguoiDung`) ON DELETE CASCADE;
 
+DELIMITER $$
+--
+-- Sự kiện
+--
+CREATE DEFINER=`root`@`localhost` EVENT `capnhat_trangthai_phiendaugia` ON SCHEDULE EVERY 1 MINUTE STARTS '2025-05-13 21:36:46' ON COMPLETION NOT PRESERVE ENABLE DO UPDATE phiendaugia p
+  JOIN sanphamdangky s ON p.MaSanPham = s.MaSanPham
+  SET p.TrangThai = 0
+  WHERE s.NgayKetThuc < NOW() AND p.TrangThai != 0$$
+
+DELIMITER ;
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

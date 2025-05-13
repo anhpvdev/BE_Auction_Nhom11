@@ -126,3 +126,10 @@ button {
     background-color: #575758;
     clip-path: polygon(100% 0, 70% 45%, 100% 100%, 0 100%, 0 0);
 }
+
+.ended-div.start {
+
+    background-color: #F33800;
+
+}
+

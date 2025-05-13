@@ -25,15 +25,18 @@ const userRoutes = (app) => {
   router.get('/user/info',authen(['ALL']),UserController.userInfo)
   router.post('/user/info',authen(['ALL']),UserController.userInfo_post)
    
-  router.get('/bid-package',authen(['User']),UserController.bidPackage)
+  router.get('/bid-package',authen(['ALL']),UserController.bidPackage)
 
   router.post('/user/bid-buy',authen(['User']),UserController.bidBuy)
   router.get('/user/buy/success',UserController.buy_success)
   router.get('/user/buy/error',UserController.buy_error)
 
   router.get('/user/auction',authen(['ALL']),UserController.auction)
+  router.get('/user/auction/:id',authen(['ALL']),UserController.auction_detail)
   router.post('/user/auction',authen(['ALL']),UserController.auction_post)
-  router.get('/auction',authen(['ALL']),UserController.auction_now)
+  router.post('/user/auction/update',authen(['ALL']),UserController.auction_update)
+
+  router.get('/auction/:id',authen(['ALL']),UserController.auction_now)
 
   return app.use("/", router)
 }

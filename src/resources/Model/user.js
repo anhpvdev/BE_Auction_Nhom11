@@ -140,7 +140,7 @@ const UserModel = {
 
     updateBID:async (userID,Bid) => {
         try {
-            const update ="UPDATE nguoidung SET Bid = Bid+? WHERE MaNguoiDung = ?"
+            const update ="UPDATE nguoidung SET Bid = Bid + ? WHERE MaNguoiDung = ?"
             const [bill] = await db.query(update,[Bid,userID])
             console.log(bill)
             if(bill.changedRows >0) return true
@@ -153,10 +153,10 @@ const UserModel = {
       
     },
 
-    addAuction:async (userID,title,content,open,close,price) => {
+    addAuction:async (userID,title,content,open,close,price,step) => {
         try {
-            const update ="INSERT INTO sanphamdangky(MaNguoiMua, TieuDe, MoTa, NganSachToiDa, NgayBatDau, NgayKetThuc) VALUES (?,?,?,?,?,?)"
-            const [bill] = await db.query(update,[userID,title,content,price,open,close])
+            const update ="INSERT INTO sanphamdangky(MaNguoiMua, TieuDe, MoTa, NganSachToiDa, NgayBatDau, NgayKetThuc,BuocGia) VALUES (?,?,?,?,?,?,?)"
+            const [bill] = await db.query(update,[userID,title,content,price,open,close,step])
 
             return bill
 
@@ -166,6 +166,54 @@ const UserModel = {
         }
       
     },
+
+    updateAuction:async (ID,title,content,open,close,price,step) => {
+        try {
+            const update ="UPDATE sanphamdangky SET TieuDe=?, MoTa=?,NganSachToiDa=?,NgayBatDau=?,NgayKetThuc=?,BuocGia=? WHERE MaSanPham = ?"
+            const [bill] = await db.query(update,[title,content,price,open,close,step,ID])
+
+            return bill
+
+        } catch (error) {
+            console.log(error)
+           return []
+        }
+      
+    },
+
+    all_user: async (page) => {
+        try {
+            const limit = 10
+            const offset = (page - 1) * limit
+
+            const [user] = await db.query(`SELECT MaNguoiDung,HoVaTen,Email,Avatar,SoDienThoai,GioiTinh,Bid,DATE_FORMAT(NgayTao, '%d/%m/%Y') as NgayTao, TrangThai, VaiTro FROM nguoidung Where VaiTro !="Admin"  LIMIT ? OFFSET ?`,[limit,offset])
+
+            return user
+
+
+        } catch (error) {
+            console.log(error)
+           return []
+        }
+      
+    },
+
+    // pay_forbid:async (num) => {
+    //     try {
+    //         const limit = 10
+    //         const offset = (page - 1) * limit
+
+    //         const [user] = await db.query(`SELECT MaNguoiDung,HoVaTen,Email,Avatar,SoDienThoai,GioiTinh,Bid,DATE_FORMAT(NgayTao, '%d/%m/%Y') as NgayTao, TrangThai, VaiTro FROM nguoidung Where VaiTro !="Admin"  LIMIT ? OFFSET ?`,[limit,offset])
+
+    //         return user
+
+
+    //     } catch (error) {
+    //         console.log(error)
+    //        return []
+    //     }
+      
+    // },
 
 
 
