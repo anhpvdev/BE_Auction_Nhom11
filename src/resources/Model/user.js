@@ -108,6 +108,22 @@ const UserModel = {
       
     },
 
+    hard_update_info:async (name,gender,bid,status,role,ID) => {
+        try {
+             console.log(name,gender,ID)
+            const update ="UPDATE nguoidung SET HoVaTen=?,GioiTinh=?,Bid=?,TrangThai=?,VaiTro=? WHERE MaNguoiDung = ?"
+            const [user] = await db.query(update,[name,gender,bid,status,role ,ID])
+
+            return user
+
+
+        } catch (error) {
+            console.log(error)
+           return []
+        }
+      
+    },
+
     createBill:async (userID,content,key) => {
         try {
             const update ="INSERT INTO thanhtoan(MaNguoiDung, NoiDung, `Key`) VALUES (?,?,?)"

@@ -34,7 +34,7 @@ const authen = (roles = []) => {
             }
 
             // Kiểm tra trạng thái tài khoản nếu cần
-            if (user.TrangThai === "bị khóa") {
+            if (user.TrangThai == "0") {
                 return res.status(403).json({ message: "Forbidden: Account is banned" });
             }
 

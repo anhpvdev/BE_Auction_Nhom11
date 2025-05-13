@@ -46,7 +46,6 @@ const UserServices = {
         const page = req.query.page || 1
 
         const list = await UserModel.all_user(page)
-        console.log(list)
         return res.render("Admin/user.ejs",{user:req.user,list:list})
 
       } catch (error) {
@@ -54,6 +53,44 @@ const UserServices = {
         return res.render("err.ejs")
       }  
     },
+    user_detail:async (req, res) => {
+      try{
+        const staff = req.user
+       const userID = req.params.id
+
+        const user =await UserModel.getInfo_byId(userID);
+
+        if(!user) return res.render("404.ejs")
+
+
+        return res.render("Admin/user_detail.ejs",{user:staff,info:user})
+      }catch(err){
+        console.log(err)
+        return res.render("err.ejs")
+      }
+    
+    },
+
+    user_update:async (req, res) => {
+      try{
+        const staff = req.user
+        const {name,gender,bid,status,role,userID} = req.body
+
+        console.log(name,gender,bid,status,role,userID)
+
+        const update = await UserModel.hard_update_info(name,gender,bid,status,role,userID)
+
+        if(update.affectedRows == 0) return res.render("err.ejs")
+       
+        return res.redirect("/admin/user")
+      }catch(err){
+        console.log(err)
+        return res.render("err.ejs")
+      }
+    
+    },
+
+
 
     accept_detail:async (req, res) => {
       try{

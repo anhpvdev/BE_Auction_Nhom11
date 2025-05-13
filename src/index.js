@@ -33,8 +33,6 @@ UserRoutes(app)
 const AdminRoutes = require("./resources/Router/admin")
 AdminRoutes(app)
 
-// const PageRoutes = require("./resources/Router/page")
-// PageRoutes(app)
 
 app.use((req, res, next) => {
     res.status(404);

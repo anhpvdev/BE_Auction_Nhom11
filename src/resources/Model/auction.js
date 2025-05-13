@@ -58,6 +58,22 @@ const AuctionModel = {
 
     all_auction_work:async (page,type,category) => {
         try {
+            var query = `SELECT p.MaPhienDauGia, p.TrangThai, p.MaSanPham , s.MaNguoiMua,n.HoVaTen,n.Avatar, s.TieuDe,s.MoTa,DATE_FORMAT(s.NgayBatDau, '%H:%i %d/%m/%Y') as NgayBatDau,DATE_FORMAT(s.NgayKetThuc, '%H:%i %d/%m/%Y') as NgayKetThuc FROM phiendaugia as p LEFT JOIN sanphamdangky as s on s.MaSanPham = p.MaSanPham LEFT JOIN nguoidung as n on n.MaNguoiDung = s.MaNguoiMua WHERE p.TrangThai = ? ORDER by s.NgayBatDau DESC`
+            const [data] = await db.query(query,[type,category])
+
+        
+
+            return data
+
+        } catch (error) {
+            console.log(error)
+            console.log(error)
+        }
+      
+    },
+
+    cate_auction_work:async (page,type,category) => {
+        try {
 
 
 
