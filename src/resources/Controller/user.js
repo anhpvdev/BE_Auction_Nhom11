@@ -271,7 +271,7 @@ const UserServices = {
         const category = req.params.id
         const type = req.query.type || 1
 
-        const list = await  AuctionModel.all_auction_work(1,type,category)
+        const list = await  AuctionModel.cate_auction_work(1,type,category)
 
         return res.render("Users/auction_now.ejs",{user:user,list:list})
       }catch(err){

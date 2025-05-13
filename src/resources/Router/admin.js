@@ -10,16 +10,19 @@ const {authen} = require("../Middleware/authenticate");
 const userRoutes = (app) => {
 
 
-  router.get('/',authen(['Admin']),AdminController.home)
-  router.get('/user',authen(['Admin']),AdminController.user)
+  router.get('/',authen(['Admin','Staff']),AdminController.home)
 
-  router.get('/accept',authen(['Admin']),AdminController.accept)
-  router.get('/accept/:id',authen(['Admin']),AdminController.accept_detail)
-  router.post('/auction/accept',authen(['Admin']),AdminController.accept_post)
-  router.post('/auction/update',authen(['Admin']),AdminController.auction_update)
+  router.get('/user',authen(['Admin','Staff']),AdminController.user)
+  router.get('/user/:id',authen(['Admin','Staff']),AdminController.user_detail)
+  router.post('/user/update',authen(['Admin','Staff']),AdminController.user_update)
+
+  router.get('/accept',authen(['Admin','Staff']),AdminController.accept)
+  router.get('/accept/:id',authen(['Admin','Staff']),AdminController.accept_detail)
+
+  router.get('/auction/:id',authen(['Admin','Staff']),AdminController.auction_detail)
+  router.post('/auction/accept',authen(['Admin','Staff']),AdminController.accept_post)
+  router.post('/auction/update',authen(['Admin','Staff']),AdminController.auction_update)
   
-  
-  router.get('/auction/:id',authen(['Admin']),AdminController.auction_detail)
 
   return app.use("/admin/", router)
 }

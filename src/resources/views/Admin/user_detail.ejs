@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Package Bids Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="/public/css/admin.css">
+    <link rel="stylesheet" href="/public/css/style.css">
+</head>
+<body>
+    <div class="d-flex">
+         <%- include('./partials/navbar.ejs') %>
+        <div style="width: 80%;">
+            <!-- Header -->
+            <%- include('./partials/header.ejs') %>
+            <!-- Section body -->
+            <section class="FAF6EA-bg-color d-flex justify-content-between" style="padding: 30px 9%; margin-top: 50px;">
+               
+                <!-- right -->
+                <form action="/admin/user/update" method="post" class="p-3 bg-white rounded" style="width: 71%;">
+                    <h4 class="text fs-4 dark-blue-color">Thông tin tài khoản</h4>
+                    
+                    <div class="d-flex flex-column align-items-center gap-1 mt-5">
+                        <img src="/public/images/user/<%=info.Avatar%>" class="rounded-circle p-1" 
+                            style="width: 100px; height: 100px; border: 2px solid orangered;" alt="">
+                        <span class="dark-blue-color text fs-4 fw-semibold">Quan Nguyen</span>
+                    </div>
+                    
+                    <div class="px-5 mt-4 d-flex flex-column" style="gap: 2rem;">
+                        <div style="display: flex;">
+                            <p style="width: 150px;">Email<p>
+                        <input type="email" value="<%=info.Email%>" 
+                            class="w-100 pb-2 placeholder-black"
+                            style="border-bottom: 1px solid #444;" readonly>
+                        </div>
+                        <div style="display: flex;">
+                            <p style="width: 150px;">Tham gia ngày: <p>
+                            <input type="text" value="<%=info.NgayTao%>" 
+                            class="w-100 pb-2 placeholder-black"
+                            style="border-bottom: 1px solid #444;" readonly>
+                        </div>
+
+                        <div style="display: flex;">
+                            <p style="width: 150px;">Họ và tên<p>
+                            <input type="text" name="name" value="<%=info.HoVaTen%>" 
+                                class="w-100 pb-2 placeholder-black"
+                                style="border-bottom: 1px solid #444;">
+                        </div>
+                        <div style="display: flex;">
+                            <p style="width: 150px;">Giới tính<p>
+                                <select name="gender" id="">
+                                    <% if(!info.GioiTinh){%><option value="" ></option><%} %>
+                                    <option value="Nam" <%= info.GioiTinh == "Nam" ? "selected" : ""  %> >Nam</option>
+                                    <option value="Nữ" <%= info.GioiTinh == "Nữ" ? "selected" : ""  %>>Nữ</option>
+                                </select>
+                        </div>
+                         <div style="display: flex;">
+                            <p style="width: 150px;">Tổng số Bids: <p>
+                            <input type="text" name="bid" value="<%=info.Bid%>" 
+                            class="w-100 pb-2 placeholder-black"
+                            style="border-bottom: 1px solid #444;">
+                        </div>
+                        <div style="display: flex;">
+                            <p style="width: 150px;">Trạng Thái<p>
+                                <select name="status" id="">
+                                    <option value="0" <%= info.TrangThai == 0 ? "selected" : ""  %> >Khóa</option>
+                                    <option value="1" <%= info.TrangThai == 1 ? "selected" : ""  %> >Hoạt động</option>
+                                </select>
+                        </div>
+
+                        <div style="display: flex;">
+                            <p style="width: 150px;">Vai trò<p>
+                                <select name="role" id="">
+                                    <option value="Staff" <%= info.TrangThai == "Staff" ? "selected" : ""  %> >Nhân viên</option>
+                                    <option value="User" <%= info.VaiTro == "User" ? "selected" : ""  %> >Người dùng</option>
+                                </select>
+                        </div>
+                        
+                        <input type="hidden" name="userID" value="<%= info.MaNguoiDung %>">
+                    
+                    </div>
+
+                    <div class="d-flex justify-content-center mt-5">
+                        <button class="button-primary px-5 py-2" type="submit">Cập nhật thông tin</button>
+                    </div>
+                </form>
+            </section>
+        </div>
+    </div>
+</body>
+</html>
