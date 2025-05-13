@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="/public/css/style.css">
+</head>
+<body>
+    <div>
+            <%- include('./partials/header.ejs') %>
+
+
+        <div class="" style="padding: 40px 9%;">
+            <section class="d-flex gap-5">
+                <div class="position-relative d-flex flex-column justify-content-end flex-fill px-3 py-1" style="height: 360px;">
+                    <img src="/public/images/page/banner-1.png" class="w-100 h-100 position-absolute top-0 start-0" alt="">
+                    <div class="d-flex align-items-center justify-content-between z-1">
+                        <h4 class="text-white text fs-6">Cách đặt giá thầu</h4>
+                        <i class="fa-solid fa-arrow-right text-white pointer"></i>
+                    </div>
+                    <p class="text-white text fs-7 z-1">Tham gia đấu giá và đặt giá thầu</p>
+                </div>
+                <div class="position-relative d-flex flex-column justify-content-end flex-fill px-3 py-1" style="height: 360px;">
+                    <img src="/public/images/page/banner-2.png" class="w-100 h-100 position-absolute top-0 start-0" alt="">
+                    <div class="d-flex align-items-center justify-content-between z-1">
+                        <h4 class="text-white text fs-6">Quy trình đấu thầu</h4>
+                        <i class="fa-solid fa-arrow-right text-white pointer"></i>
+                    </div>
+                    <p class="text-white text fs-7 z-1">Tham gia đấu giá theo các bước</p>
+                </div>
+                <div class="position-relative d-flex flex-column justify-content-end flex-fill px-3 py-1" style="height: 360px;">
+                    <img src="/public/images/page/banner-3.png" class="w-100 h-100 position-absolute top-0 start-0" alt="">
+                    <div class="d-flex align-items-center justify-content-between z-1">
+                        <h4 class="text-white text fs-6">Mua giá thầu</h4>
+                        <i class="fa-solid fa-arrow-right text-white pointer"></i>
+                    </div>
+                    <p class="text-white text fs-7 z-1">Mua giá thầu và bắt đầu đặt</p>
+                </div>
+            </section>
+
+            <section class="mt-5">
+                <p class="text-center"><span class="dark-blue-color text fs-5 fw-semibold">HƯỚNG DẪN</span> <span class="text fs-5 primary-color fw-semibold">THAM GIA</span></p>
+                
+                <div class="mt-5 d-flex justify-content-between">
+                    <div class="d-flex align-items-center gap-5">
+                        <div>
+                            <span class="text fs-5 dark-blue-color fw-semibold">Bước 1</span>
+                            <p class="fs-7">Mua lượt đấu giá</p>
+                        </div>
+                        <img src="/public/images/page/step-1.png" style="width: 144px; height: 100px;" alt="">
+                    </div>
+                    <div class="d-flex align-items-center gap-5">
+                        <div>
+                            <span class="text fs-5 dark-blue-color fw-semibold">Bước 2</span>
+                            <p class="fs-7">Tham gia đấu giá</p>
+                        </div>
+                        <img src="/public/images/page/step-2.png" style="width: 144px; height: 100px;" alt="">
+                    </div>
+                    <div class="d-flex align-items-center gap-5">
+                        <div>
+                            <span class="text fs-5 dark-blue-color fw-semibold">Bước 3</span>
+                            <p class="fs-7">Tiến hành thanh toán</p>
+                        </div>
+                        <img src="/public/images/page/step-3.png" style="width: 144px; height: 100px;" alt="">
+                    </div>
+                </div>
+            </section>
+
+            <section class="mt-5">
+                <div class="d-flex align-items-center gap-2">
+                    <div class="rounded-circle primary-bg-color d-flex justify-content-center align-items-center" style="width: 50px; height: 50px;">
+                        <i class="fa-solid fa-cube text text-white" style="font-size: 20px;"></i>
+                    </div>
+                    <h4 class="dark-blue-color text fs-4 fw-semibold">GÓI BIRDS</h4>
+                </div>
+                <div class="mt-3 d-flex justify-content-between">
+                    <div class="rounded position-relative" style="width: 32%; height: 180px; background-color: rgb(3, 9, 189);">
+                        <img class="position-absolute end-0 bottom-0" src="/public/images/page/mesh.png" alt=""/>
+                        <span class="text text-white fs-5 position-absolute" style="top: 10px; right: 20px;">$25.00</span>
+                        <span class="text text-white fs-5 position-absolute" style="top: 10px; left: 20px;">Hary Bid</span>
+                        <span class="text text-white fs-1 position-absolute" style="bottom: 10px; left: 20px;">50<br>Bids</span>
+                    </div>
+                    <div class="rounded position-relative" style="width: 32%; height: 180px; background-color: rgb(3, 172, 42);">
+                        <img class="position-absolute end-0 bottom-0" src="/public/images/page/mesh.png" alt=""/>
+                        <span class="text text-white fs-5 position-absolute" style="top: 10px; right: 20px;">$25.00</span>
+                        <span class="text text-white fs-5 position-absolute" style="top: 10px; left: 20px;">Hary Bid</span>
+                        <span class="text text-white fs-1 position-absolute" style="bottom: 10px; left: 20px;">50<br>Bids</span>
+                    </div>
+                    <div class="rounded position-relative" style="width: 32%; height: 180px; background-color: rgb(3, 189, 149);">
+                        <img class="position-absolute end-0 bottom-0" src="/public/images/page/mesh.png" alt=""/>
+                        <span class="text text-white fs-5 position-absolute" style="top: 10px; right: 20px;">$25.00</span>
+                        <span class="text text-white fs-5 position-absolute" style="top: 10px; left: 20px;">Hary Bid</span>
+                        <span class="text text-white fs-1 position-absolute" style="bottom: 10px; left: 20px;">50<br>Bids</span>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <%- include('./partials/footer.ejs') %>
+    </div>
+
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+</body>
+</html>

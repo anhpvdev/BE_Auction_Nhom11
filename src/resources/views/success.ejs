@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Thanh toán thành công</h1>
+    <i>Quay về trang chủ sau: <span class="time">5s</span></i>
+    <script>
+       let countdown = 5;
+        const interval = setInterval(() => {
+            document.querySelector(".time").innerText = countdown;
+            countdown--;
+                if (countdown < 0) {
+                    clearInterval(interval);
+                    window.location.href = '/';
+                }
+            }, 1000);
+    </script>
+</body>
+</html>

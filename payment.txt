@@ -1,0 +1,7 @@
+	
+Loại thẻ quốc tế VISA 
+Số thẻ: 4242 4242 4242 4242
+CVC/CVV: any
+Tên chủ thẻ: any
+Ngày hết hạn:any
+Email: any

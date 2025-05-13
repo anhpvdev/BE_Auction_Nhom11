@@ -1,0 +1,84 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.primary-color {
+    color: #F33800;
+}
+
+.primary-bg-color {
+    background-color: #F33800;
+}
+
+.dark-blue-color{
+    color: #2D207A;
+}
+
+.dark-blue-bg-color{
+    background-color: #2D207A;
+}
+
+ul {
+    padding: 0;
+}
+
+button {
+    border: none;
+    outline: none;
+}
+
+h1,h2,h3,h4,h5 {
+    padding: 0;
+    margin: 0;
+}
+
+input {
+    border: none;
+    outline: none;
+}
+
+table,td,tr,th {
+    border: 1px solid #333;
+    border-collapse: collapse;
+    padding: 5px 10px;
+}
+
+th {
+    text-align: center;
+}
+
+.button_active{
+    background-color: #F33800;
+    color: #ffffff;
+    border-radius: 6px;
+}
+
+.hover-li:hover{
+    background-color: #F33800;
+    color: #ffffff;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.pointer{
+    cursor: pointer;
+}
+
+.div-delete-user{
+    display: none;
+}
+
+.adm_navbar{
+    text-decoration: none;  
+    color: black;
+}
+
+.adm_navbar i{
+    margin-right: 10px;
+}
+
+li.button_active .adm_navbar{
+    color: white;
+}

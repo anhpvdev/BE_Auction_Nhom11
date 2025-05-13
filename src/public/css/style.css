@@ -1,0 +1,128 @@
+.primary-color {
+    color: #F33800;
+}
+
+.primary-bg-color {
+    background-color: #F33800;
+}
+
+.F0EBDA-color {
+    color: #F0EBDA;
+}
+
+.F0EBDA-bg-color {
+    background-color: #F0EBDA;
+}
+
+.hover-text:hover{
+    color: #F33800 !important;
+}
+
+.F5EDCE-color{
+    color: #F5EDCE;
+}
+
+.F5EDCE-bg-color {
+    background-color: #F5EDCE;
+}
+
+.dark-blue-color{
+    color: #2D207A;
+}
+
+.dark-blue-bg-color{
+    background-color: #2D207A;
+}
+
+.FAF6EA-bg-color {
+    background-color: #FAF6EA;
+}
+
+.fs-7{
+    font-size: 15px;
+}
+
+input {
+    outline: none;
+    border: none;   
+}
+
+a {
+    color: black;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+p {
+    margin: 0;
+}
+
+button {
+    outline: none;
+    border: none;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.pointer{
+    cursor: pointer;
+}
+
+.linear-orange{
+    background: linear-gradient(to bottom, #FFF7E9, #FFD0AC);
+}
+
+.linear-green{
+    background: linear-gradient(to bottom, #E9FFF5, #99FFCC);
+}
+
+.placeholder-black::placeholder {
+    color: black;
+}
+
+.button-primary{
+    background-color: #F33800;
+    color: white;
+    font-size: 17px;
+    border-radius: 6px;
+}
+
+.button-sub {
+    border: 1px solid #F33800;
+    color: #F33800;
+    border-radius: 6px;
+    font-size: 17px;
+    background-color: white;
+}
+
+.div-infomation {
+    display: none;
+}
+
+.div-bell:hover > .div-infomation {
+    display: block;
+}
+
+.category-active {
+    background-color: #F33800;
+    color: white;
+}
+
+.ended-div {
+    width: 100px;
+    padding: 3px 8px;
+    color: white;
+    background-color: #575758;
+    clip-path: polygon(100% 0, 70% 45%, 100% 100%, 0 100%, 0 0);
+}
