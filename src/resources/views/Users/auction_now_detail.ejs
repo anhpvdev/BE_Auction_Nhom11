@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <!-- Quill stylesheet -->
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="/public/css/style.css">
+</head>
+<body>
+    <div>
+        <%- include('./partials/header.ejs') %>
+
+        <div class="F0EBDA-bg-color" style="padding: 40px 9%;">
+            <div class="d-flex align-items-center gap-2">
+                <div class="rounded-circle primary-bg-color d-flex justify-content-center align-items-center" style="width: 50px; height: 50px;">
+                    <i class="fa-solid fa-cube text text-white" style="font-size: 20px;"></i>
+                </div>
+                <h4 class="dark-blue-color text fs-4 fw-semibold my-0">ĐẤU GIÁ SẢN PHẨM</h4>
+            </div>
+
+            <div class="d-flex gap-5 mt-4">
+                <div style="width: 60%;">
+                    <h4 class="dark-blue-color text fs-5 fw-semibold mb-3">Mô tả sản phẩm</h4>
+                    <div class="bg-white p-4 rounded">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-center gap-3">
+                                <img src="/public/images/user/<%= detail.Avatar %>" class="rounded-circle" style="width: 60px; height: 60px;" alt="">
+                                <span class="fw-semibold"><%= detail?.HoVaTen %></span>
+                            </div>
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="ended-div <%= detail?.TrangThai == 1 ? 'start' : '' %>"> <%= detail?.TrangThai == 1 ? 'work' : 'ENDED' %> </div>
+                                <span><%= detail?.NgayKetThuc %></span>
+                            </div>
+                        </div>
+                        <!-- Chi tiết yêu cầu -->
+                        <div class="mt-3">
+                            <h4 class="fs-5 text">Yêu cầu: <%= detail?.TieuDe %></h4>
+                            <%- detail?.MoTa %>
+                        </div>
+                    </div>
+                    <% if(detail?.MaNguoiMua != user?.MaNguoiDung && detail?.TrangThai == 1){ %>
+                    <div class="mt-4">
+                        <h4 class="dark-blue-color text fs-5 fw-semibold mb-3">Đặt giá đấu</h4>
+                        <!-- <form action="/auction/bid" method="post" class="p-4 rounded bg-white">
+                            <div class="d-flex gap-5 align-items-center">
+                                <label for="">Nhập giá của bạn:</label>
+                                <input placeholder="10$" class="border border-black rounded px-3 py-2 flex-fill" type="number" min="" max="" name="price" id="">
+                                <input type="hidden" name="BidID" value="<%= detail?.MaPhienDauGia %>" >
+                                <span>> 10,000$</span>
+                            </div>
+                            <button type="submit" class="button-primary d-block px-4 py-2 w-100 mt-3">Xác nhận đấu giá</button>
+                        </form>         -->
+                        <div class="p-4 rounded bg-white">
+                            <div class="d-flex gap-5 align-items-center">
+                                <label for="">Nhập giá của bạn:</label>
+                                <input placeholder="10$" class="border border-black rounded px-3 py-2 flex-fill" type="number" min="" max="" name="price" id="bid_price">
+                                <span>> 10,000$</span>
+                            </div>
+                            <button type="submit" class="button-primary d-block px-4 py-2 w-100 mt-3" id="bid_btn">Xác nhận đấu giá</button>
+                        </div>  
+                    </div>
+                    <%}%>
+                </div>
+                <div style="width: 40%;">
+                    <div class="rounded overflow-hidden bg-white">
+                        <div class="d-flex justify-content-center align-items-center gap-3 py-3" style="background-color: #bbedd7; border-top: 4px solid #07AF66;">
+                            <img src="./images/image-1.png" alt="">
+                            <p class="text fs-6 fw-semibold" style="color: #07AF66;">PHIÊN ĐẤU GIÁ (Tên sản phẩm)</p>
+                        </div>
+                        <div class="px-4 py-3 d-flex flex-column gap-3">
+                            <div class="d-flex align-items-center justify-content-between py-2 px-4 rounded" 
+                                style="background-color: #07AF66; border: 3px solid #1ED51B;" id="show_bid_top">
+                                <img src="/public/images/user/<%= list_bid[0]?.Avatar %>" class="rounded-circle" style="width: 50px; height: 50px;" alt="">
+                                <div class="d-flex flex-column gap-2">
+                                    <span class="text-white">Người trả giá thấp nhất</span>
+                                    <span class="text-white fw-bold"><%= list_bid[0]?.HoVaTen%></span>
+                                </div>
+                                <button class="linear-green px-4 py-2 rounded-pill">
+                                    <i class="fa-solid fa-gavel"></i>
+                                    <span class="dark-blue-color fw-semibold" id="bid_top"><%= list_bid[0]?.GiaDaDauGia || 0 %></span>
+                                </button>
+                            </div>
+                            <div class="d-flex justify-content-center gap-3">
+                                <div class="px-4 py-2 rounded-4 bg-body-tertiary d-flex flex-column align-items-center" style="width: max-content;">
+                                    <span>Giá niêm yết</span>
+                                    <div class="d-flex align-items-center gap-2 mt-1">
+                                        <span class="fs-7 fw-bold dark-blue-color">$<%= detail?.NganSachToiDa %></span>
+                                        <img src="/public/images/page/fire.png" style="width: 20px; height: 20px;" alt="">
+                                    </div>
+                                </div>
+                                <div class="px-4 py-2 rounded-4 bg-body-tertiary d-flex flex-column align-items-center" style="width: max-content;">
+                                    <span>Bước giá</span>
+                                    <div class="d-flex align-items-center gap-2 mt-1">
+                                        <span class="fs-7 fw-bold dark-blue-color" id="bid_step"><%= detail?.BuocGia %></span>
+                                        <img src="/public/images/page/fire.png" style="width: 20px; height: 20px;" alt="">
+                                    </div>
+                                </div>
+                                <div class="px-4 py-2 rounded-4 bg-body-tertiary d-flex flex-column align-items-center" style="width: max-content;">
+                                    <span>Lượt đấu</span>
+                                    <div class="d-flex align-items-center gap-2 mt-1">
+                                        <span class="fs-7 fw-bold dark-blue-color">$???</span>
+                                        <img src="/public/images/page/fire.png" style="width: 20px; height: 20px;" alt="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex flex-column gap-2">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span>Lượt:</span>
+                                    <span class="dark-blue-color fw-semibold">475</span>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span>Bắt đầu:</span>
+                                    <span class="dark-blue-color">07/03 14:15</span>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span>Kết thúc:</span>
+                                    <span class="dark-blue-color">07/03 15:30</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rounded p-3 bg-white mt-4">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-center gap-2 text-white primary-bg-color px-3 py-2 rounded">
+                                <span class="rounded-circle bg-white" style="width: 10px; height: 10px;"></span>
+                                Lịch sử đấu giá
+                            </div>
+                            <span><%= list_bid.length %></span>
+                        </div>
+                        <div class="mt-4 p-2" style="height: 20rem; overflow-y: scroll;">
+                            <div class="d-flex flex-column gap-3" id="list_bid">
+                                <% for(let i=0; i<list_bid.length;i++){ %>
+                                <div class="d-flex justify-content-between gap-4 align-items-center">
+                                    <img src="/public/images/user/<%= list_bid[i].Avatar %>" class="rounded-circle" style="width: 50px; height: 50px;" alt="">
+                                    <div class="d-flex gap-1 flex-column flex-fill">
+                                        <span class="dark-blue-color fw-semibold"><%= list_bid[i].HoVaTen %></span>
+                                        <span><%= list_bid[i].ThoiGian %></span>
+                                    </div>
+                                    <span class="primary-color fw-semibold">$ <%= list_bid[i].GiaDaDauGia %></span>
+                                </div>
+                                <%}%>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+   <%- include('./partials/footer.ejs') %>
+    </div>
+
+
+
+
+
+    <!-- Quill library -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+    <script src="/public/script/jquery.js"></script>
+    <script src="/public/script/socket.js"></script>
+    <script>
+        const __URL_CHAT  = location.origin
+        const socket = io(__URL_CHAT); 
+        const RoomID = '<%= detail?.MaPhienDauGia %>'
+        socket.emit("joinRoom", RoomID);
+
+        $('#bid_btn').on('click',function(){
+            var Bid_price = $('#bid_price').val()
+
+            var bid_step = $("#bid_step").html()
+            var bid_top = $("#bid_top").html()
+            if(Bid_price > bid_top - bid_step) return alert("Giá không được cao hơn bước giá")
+
+            $.ajax({
+                type: "post",
+                url: "/auction/bid",
+                data: {
+                    BidID: RoomID,
+                    price: Bid_price
+                },
+                success: function (response) {
+                    var userData = response.data
+                    if(userData){
+                        socket.emit('send_bid', { roomId: RoomID, data: userData });
+                    }
+                }, error: function (error) {
+                    var message = error.responseJSON?.message
+                    message?.length > 0 ? alert(message) : alert("có lỗi sảy ra") ;
+                }
+            })
+        })
+
+
+        socket.on("receive_bid", ({ roomId, data }) => {
+            var new_bid = `<div class="d-flex justify-content-between gap-4 align-items-center">
+                                    <img src="/public/images/user/${data?.Avatar}" class="rounded-circle" style="width: 50px; height: 50px;" alt="">
+                                    <div class="d-flex gap-1 flex-column flex-fill">
+                                        <span class="dark-blue-color fw-semibold">${data?.HoVaTen}</span>
+                                        <span>now</span>
+                                    </div>
+                                    <span class="primary-color fw-semibold">${data?.Price}</span>
+                                </div>`
+            $('#list_bid').prepend(new_bid)
+
+            var bid_top = ` <img src="/public/images/user/${data?.Avatar}" class="rounded-circle" style="width: 50px; height: 50px;" alt="">
+                                <div class="d-flex flex-column gap-2">
+                                    <span class="text-white">Người trả giá thấp nhất</span>
+                                    <span class="text-white fw-bold">${data?.HoVaTen}</span>
+                                </div>
+                                <button class="linear-green px-4 py-2 rounded-pill">
+                                    <i class="fa-solid fa-gavel"></i>
+                                    <span class="dark-blue-color fw-semibold" id="bid_top">${data?.Price}</span>
+                                </button>`
+
+            $('#show_bid_top').html(bid_top)
+        });
+    </script>
+</body>
+</html>

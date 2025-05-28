@@ -21,6 +21,7 @@ const userRoutes = (app) => {
 
   router.get('/auction/:id',authen(['Admin','Staff']),AdminController.auction_detail)
   router.post('/auction/accept',authen(['Admin','Staff']),AdminController.accept_post)
+  router.post('/auction/deny',authen(['Admin','Staff']),AdminController.accept_deny)
   router.post('/auction/update',authen(['Admin','Staff']),AdminController.auction_update)
   
 

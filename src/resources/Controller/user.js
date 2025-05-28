@@ -221,8 +221,8 @@ const UserServices = {
                 quantity: 1,
               },
             ],
-            success_url: `http://localhost:8080/user/buy/success?id=${billID}&key=${billKey}&bid=${bid}&user=${userID}`,
-            cancel_url: 'http://localhost:8080/user/buy/error',
+            success_url: `${process.env.DOMAIN}/user/buy/success?id=${billID}&key=${billKey}&bid=${bid}&user=${userID}`,
+            cancel_url: `${process.env.DOMAIN}/user/buy/error`,
           });
 
           res.redirect(session.url)
@@ -239,6 +239,8 @@ const UserServices = {
   auction:async (req, res) => {
       try{
        const user = req.user
+        if(req.user.Bid < 5) return res.json('Vui lòng nạp bid để đăng bài')
+
         return res.render("Users/auction.ejs",{user:user})
       }catch(err){
         console.log(err)
@@ -281,12 +283,64 @@ const UserServices = {
     
   },
 
+  auction_now_detail:async (req, res) => {
+      try{
+        const user = req.user
+        const BidID = req.params.id
+        const detail = await AuctionModel.auction_now_detail(BidID)
+        const list_bid = await AuctionModel.auction_list_bid(BidID)
+
+        return res.render("Users/auction_now_detail.ejs",{user:user,detail:detail,list_bid:list_bid})
+      }catch(err){
+        console.log(err)
+        return res.render("err.ejs")
+      }
+  },
+
+  auction_bid:async (req, res) => {
+      try{
+        const userID = req.user.MaNguoiDung
+        if(req.user.Bid < 1) return res.json("Vui lòng nạp thêm bid để đấu giá")
+        const {BidID,price} = req.body
+        const check = await AuctionModel.auction_bid_check(BidID)
+
+        if(!check) return res.json("Looix")
+
+          check.NganSachToiDa = parseFloat(check.NganSachToiDa)
+          check.GiaThapNhat = parseFloat(check.GiaThapNhat)
+          check.BuocGia = parseFloat(check.BuocGia)
+
+        if(check.TrangThai !=1) return res.status(500).json({message:"Phiên đấu giá đã kết thúc"})
+
+        if(price >= check.NganSachToiDa) return res.status(500).json({message:"Giá không được lớn hơn ngân sáhc tối đa"})
+
+        if(check.GiaThapNhat != '0.00' && price >= check.GiaThapNhat) return res.status(500).json({message:"Giá không phù hợp yêu cầu"})
+
+        if(check.GiaThapNhat != '0.00' && price > check.GiaThapNhat - check.BuocGia) return res.status(500).json({message:"Giá không phù hợp yêu cầu, phải thấp hơn số lần bước giá"})
+
+        const detail = await AuctionModel.auction_bid_join(userID,BidID,price)
+
+        await UserModel.updateBID(userID,-1)
+        var returnUser = {
+          HoVaTen: req.user.HoVaTen,
+          Avatar:req.user.Avatar,
+          Price: price
+        }
+
+        return res.status(200).json({message:"Đấu giá thành công",data:returnUser})
+      }catch(err){
+        console.log(err)
+        return res.render("err.ejs")
+      }
+  },
+
   auction_post:async (req, res) => {
       try{
        const userID = req.user.MaNguoiDung
        const {title,content,open,close,price,step} = req.body
+       const tag = 2
 
-       const auction = await UserModel.addAuction(userID,title,content,open,close,price,step)
+       const auction = await UserModel.addAuction(userID,title,content,open,close,price,step,tag)
 
        if(auction.affectedRows < 1) return res.render("err.ejs")
 

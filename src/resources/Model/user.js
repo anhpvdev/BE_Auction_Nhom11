@@ -169,10 +169,10 @@ const UserModel = {
       
     },
 
-    addAuction:async (userID,title,content,open,close,price,step) => {
+    addAuction:async (userID,title,content,open,close,price,step,tag) => {
         try {
-            const update ="INSERT INTO sanphamdangky(MaNguoiMua, TieuDe, MoTa, NganSachToiDa, NgayBatDau, NgayKetThuc,BuocGia) VALUES (?,?,?,?,?,?,?)"
-            const [bill] = await db.query(update,[userID,title,content,price,open,close,step])
+            const update ="INSERT INTO sanphamdangky(MaNguoiMua, TieuDe, MoTa, NganSachToiDa, NgayBatDau, NgayKetThuc,BuocGia,MaDanhMuc ) VALUES (?,?,?,?,?,?,?,?)"
+            const [bill] = await db.query(update,[userID,title,content,price,open,close,step,tag])
 
             return bill
 

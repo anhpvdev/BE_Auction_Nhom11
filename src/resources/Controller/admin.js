@@ -149,6 +149,22 @@ const UserServices = {
     
   },
 
+  accept_deny:async (req, res) => {
+      try{
+        const staffID = req.user.MaNguoiDung
+        const {auctionID,userID,info} = req.body
+        const deny = await AuctionModel.auction_deny(auctionID,info)
+        if(deny.changedRows < 1) return res.render("err.ejs")
+
+        return res.redirect('/admin/')
+       
+      }catch(err){
+        console.log(err)
+        return res.render("err.ejs")
+      }
+    
+  },
+
   auction_update:async (req, res) => {
       try{
        const {auctionID,title,content,open,close,price,step} = req.body
