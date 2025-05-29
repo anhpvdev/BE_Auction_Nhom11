@@ -26,7 +26,7 @@
                                         <span class="fw-bold fs-6 text">Mới</span>
                                         <a href="" class="primary-color">Xem tất cả</a>
                                     </div>
-                                    <div class="d-flex flex-column gap-3">
+                                    <div class="d-flex flex-column gap-3" id="new_noti">
                                         <!-- <div class="d-flex gap-3 align-items-center">
                                             <img src="/public/images/page/image.png" class="rounded-circle" style="width: 50px; height: 50px;" alt="">
                                             <div>
@@ -112,3 +112,32 @@
             </div>
             <!-- end header bottom -->
         </header>
+        <script src="/public/script/jquery.js"></script>
+        <script>
+            async function get_noti(){
+                $.ajax({
+                type: "get",
+                url: "/user/noti",
+                success: function (response) {
+                    var notiData = response.data
+                    if(notiData){
+                       var listnoti =""
+                       for(let i=0;i<notiData.length;i++){
+                            listnoti += ` <div class="d-flex gap-3 align-items-center">
+                                            <img src="/public/images/page/image.png" class="rounded-circle" style="width: 50px; height: 50px;" alt="">
+                                            <div>
+                                                <p class="flex-fill fs-7">${notiData[i].NoiDung}</p>
+                                                <span class="primary-color fst-italic">${notiData[i].time_ago}</span>
+                                            </div>
+                                            <div class="primary-bg-color rounded-circle" style="width: 15px; height: 15px;"></div>
+                                        </div>`
+                       }
+
+                       $('#new_noti').html(listnoti)
+                    }
+                }
+            })
+            }
+
+            get_noti()
+        </script>

@@ -14,62 +14,7 @@
 
     <section class="FAF6EA-bg-color d-flex justify-content-between" style="padding: 30px 9%;">
         <!-- left -->
-        <div class="p-3 bg-white rounded" style="width: 27%;">
-            <div class="d-flex justify-content-between align-items-center">
-                <img src="/public/images/user/<%=user.Avatar%>" class="rounded-circle" style="width: 60px; height: 60px;" alt="">
-                <div>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <span class="fs-6 text"><%=user.HoVaTen%></span>
-                        <i class="fa-solid fa-cube pointer"></i>
-                    </div>
-                    <p class="fs-7"><%=user.Email%></p>
-                </div>
-            </div>
-            <div class="mt-4">
-                <div class="p-3 linear-orange rounded">
-                    <div class="d-flex justify-content-between">
-                        <p class="text fs-6 fw-semibold dark-blue-color">Tổng số tiền</p>
-                        <span class="d-flex justify-content-center align-items-center primary-bg-color rounded-circle pointer" 
-                                style="width: 30px; height: 30px;">
-                            <i class="fa-solid fa-plus text text-white"></i>
-                        </span>
-                    </div>
-                    <span class="text fs-3">0</span>
-                </div>
-                <div class="p-3 linear-green rounded mt-3">
-                    <div class="d-flex justify-content-between">
-                        <p class="text fs-6 fw-semibold dark-blue-color">Tổng số Bids</p>
-                        <span class="d-flex justify-content-center align-items-center rounded-circle pointer" 
-                                style="width: 30px; height: 30px; background-color: rgb(4, 143, 16);">
-                            <a href="/bid-package"><i class="fa-solid fa-plus text text-white"></i></a>
-                        </span>
-                    </div>
-                    <span class="text fs-3"><%=user.Bid%></span>
-                </div>
-            </div>
-            <ul class="mt-4 d-flex flex-column gap-4 px-3">
-                <li class="d-flex align-items-center gap-3">
-                    <i class="fa-solid fa-cube"></i>
-                    <span>Lịch sử đấu giá</span>
-                </li>
-                <li class="d-flex align-items-center gap-3">
-                    <i class="fa-solid fa-cube"></i>
-                    <span>Lịch sử giao dịch Bids</span>
-                </li>
-                <li class="d-flex align-items-center gap-3">
-                    <i class="fa-solid fa-cube"></i>
-                    <span>Lịch sử thanh toán</span>
-                </li>
-                <li class="d-flex align-items-center gap-3">
-                    <i class="fa-solid fa-cube"></i>
-                    <span>Địa chỉ nhận hàng</span>
-                </li>
-                <li class="d-flex align-items-center gap-3">
-                    <i class="fa-solid fa-cube"></i>
-                    <span>Sản phẩm thắng</span>
-                </li>
-            </ul>
-        </div>
+        <%- include('./partials/info_menu.ejs') %>
         <!-- right -->
         <form action="/user/info" method="post" class="p-3 bg-white rounded" style="width: 71%;">
             <h4 class="text fs-4 dark-blue-color">Thông tin tài khoản</h4>

@@ -169,10 +169,10 @@ const UserModel = {
       
     },
 
-    addAuction:async (userID,title,content,open,close,price,step) => {
+    addAuction:async (userID,title,content,open,close,price,step,tag) => {
         try {
-            const update ="INSERT INTO sanphamdangky(MaNguoiMua, TieuDe, MoTa, NganSachToiDa, NgayBatDau, NgayKetThuc,BuocGia) VALUES (?,?,?,?,?,?,?)"
-            const [bill] = await db.query(update,[userID,title,content,price,open,close,step])
+            const update ="INSERT INTO sanphamdangky(MaNguoiMua, TieuDe, MoTa, NganSachToiDa, NgayBatDau, NgayKetThuc,BuocGia,MaDanhMuc ) VALUES (?,?,?,?,?,?,?,?)"
+            const [bill] = await db.query(update,[userID,title,content,price,open,close,step,tag])
 
             return bill
 
@@ -206,6 +206,39 @@ const UserModel = {
 
             return user
 
+
+        } catch (error) {
+            console.log(error)
+           return []
+        }
+      
+    },
+
+    add_noti: async (noti,userID) => {
+        try {
+            const query ="INSERT INTO thongbao(MaNguoiDung, NoiDung) VALUES (?, ?)"
+            const [bill] = await db.query(query,[userID, noti])
+
+            return bill
+
+        } catch (error) {
+            console.log(error)
+           return []
+        }
+      
+    },
+
+    getNoti: async (userID) => {
+        try {
+            const query =`SELECT *, Case WHEN TIMESTAMPDIFF(SECOND, ThoiGian, NOW()) < 60 THEN CONCAT(TIMESTAMPDIFF(SECOND, ThoiGian, NOW()), ' giây trước')
+    WHEN TIMESTAMPDIFF(MINUTE, ThoiGian, NOW()) < 60 THEN CONCAT(TIMESTAMPDIFF(MINUTE, ThoiGian, NOW()), ' phút trước')
+    WHEN TIMESTAMPDIFF(HOUR, ThoiGian, NOW()) < 24 THEN CONCAT(TIMESTAMPDIFF(HOUR, ThoiGian, NOW()), ' giờ trước')
+    WHEN TIMESTAMPDIFF(DAY, ThoiGian, NOW()) < 7 THEN CONCAT(TIMESTAMPDIFF(DAY, ThoiGian, NOW()), ' ngày trước')
+    ELSE DATE_FORMAT(ThoiGian, '%Y-%m-%d')
+  END AS time_ago FROM thongbao WHERE MaNguoiDung = ? ORDER BY ThoiGian DESC`
+            const [noti] = await db.query(query,[userID])
+
+            return noti
 
         } catch (error) {
             console.log(error)

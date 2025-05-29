@@ -24,10 +24,13 @@ const userRoutes = (app) => {
 
   router.get('/user/info',authen(['ALL']),UserController.userInfo)
   router.post('/user/info',authen(['ALL']),UserController.userInfo_post)
-   
+  router.get('/user/noti',authen(['ALL']),UserController.userNoti)
+  router.get('/user/history',authen(['ALL']),UserController.history_auction)
+  router.get('/user/history/buy',authen(['ALL']),UserController.history_buybid)
+
   router.get('/bid-package',authen(['ALL']),UserController.bidPackage)
 
-  router.post('/user/bid-buy',authen(['User']),UserController.bidBuy)
+  router.post('/user/bid-buy',authen(['ALL']),UserController.bidBuy)
   router.get('/user/buy/success',UserController.buy_success)
   router.get('/user/buy/error',UserController.buy_error)
 
@@ -35,9 +38,12 @@ const userRoutes = (app) => {
   router.get('/user/auction/:id',authen(['ALL']),UserController.auction_detail)
   router.post('/user/auction',authen(['ALL']),UserController.auction_post)
   router.post('/user/auction/update',authen(['ALL']),UserController.auction_update)
+   router.get('/user/auction-deny/:id',authen(['ALL']),UserController.auctiondeny_detail)
+  router.post('/user/auction-deny/delete',authen(['ALL']),UserController.auctiondeny_delete)
 
   router.get('/auction/:id',authen(['ALL']),UserController.auction_now)
-
+  router.get('/auction/detail/:id',authen(['ALL']),UserController.auction_now_detail)
+  router.post('/auction/bid',authen(['ALL']),UserController.auction_bid)
   return app.use("/", router)
 }
 module.exports = userRoutes

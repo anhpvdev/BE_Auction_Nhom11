@@ -141,7 +141,30 @@ const UserServices = {
 
         await UserModel.updateBID(userID,-5)
 
+        const noti = `Sản phẩm đấu giá của bạn đã được duyệt.`
+        await UserModel.add_noti(noti,userID)
+
         return res.redirect('/admin/')
+      }catch(err){
+        console.log(err)
+        return res.render("err.ejs")
+      }
+    
+  },
+
+  accept_deny:async (req, res) => {
+      try{
+        const staffID = req.user.MaNguoiDung
+        const {auctionID,userID,info} = req.body
+        const deny = await AuctionModel.auction_deny(auctionID,info)
+        if(deny.changedRows < 1) return res.render("err.ejs")
+
+        const noti = `Sản phẩm đấu giá của bạn đã bị từ chối.`
+        await UserModel.add_noti(noti,userID)
+
+
+        return res.redirect('/admin/')
+       
       }catch(err){
         console.log(err)
         return res.render("err.ejs")

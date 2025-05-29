@@ -19,6 +19,9 @@
                 </div>
                 <h4 class="dark-blue-color text fs-4 fw-semibold">ĐẤU GIÁ ĐANG DIỄN RA</h4>
             </div>
+             <button class="button-primary px-3 py-1" style="margin-top: 20px;">
+                 <a href="?type=0" class="justify-content-left">Phiên đã kết thúc</a>
+               </button>
 
             <div class="mt-4 d-flex gap-3 align-items-start">
                 <!-- Danh mục -->
@@ -75,7 +78,8 @@
                 <!-- Danh sách đấu giá -->
                 <div class="d-flex flex-column gap-3 flex-fill" style="height: 52vh; overflow-y: scroll;">
                     <%for(let i=0; i< list.length;i++){ %>
-                    <div class="flex-fill p-3 bg-white rounded d-flex justify-content-between align-items-center">
+                    <a href="/auction/detail/<%= list[i].MaPhienDauGia %>">
+                        <div class="flex-fill p-3 bg-white rounded d-flex justify-content-between align-items-center">
                        
                         <div style="width: 53%;">
                             <div class="d-flex justify-content-between align-items-center">
@@ -95,40 +99,43 @@
                             </div>
                         </div>
                         <div class="" style="width: 45%;">
+                            <% if( list[i].TrangThai == 1){ %>
                             <div class="d-flex align-items-center justify-content-center mb-4 gap-3 primary-color text fs-3">
                                 <i class="fa-solid fa-hourglass-end"></i>
                                 <div id="countdown">02:30:45</div>
                             </div>
+                            <%}%>
                             <div class="d-flex justify-content-center gap-3">
                                 <div class="px-4 py-2 rounded-4 bg-body-tertiary d-flex flex-column align-items-center" style="width: max-content;">
                                     <span>Giá niêm yết</span>
                                     <div class="d-flex align-items-center gap-2 mt-1">
-                                        <span class="fs-7 fw-bold dark-blue-color">$475</span>
+                                        <span class="fs-7 fw-bold dark-blue-color">$ <%= list[i].NganSachToiDa %></span>
                                         <img src="/public/images/page/fire.png" style="width: 20px; height: 20px;" alt="">
                                     </div>
                                 </div>
                                 <div class="px-4 py-2 rounded-4 bg-body-tertiary d-flex flex-column align-items-center" style="width: max-content;">
                                     <span>Bước giá</span>
                                     <div class="d-flex align-items-center gap-2 mt-1">
-                                        <span class="fs-7 fw-bold dark-blue-color">$475</span>
+                                        <span class="fs-7 fw-bold dark-blue-color">$ <%= list[i].BuocGia %></span>
                                         <img src="/public/images/page/fire.png" style="width: 20px; height: 20px;" alt="">
                                     </div>
                                 </div>
                                 <div class="px-4 py-2 rounded-4 bg-body-tertiary d-flex flex-column align-items-center" style="width: max-content;">
                                     <span>Lượt đấu</span>
                                     <div class="d-flex align-items-center gap-2 mt-1">
-                                        <span class="fs-7 fw-bold dark-blue-color">$475</span>
+                                        <span class="fs-7 fw-bold dark-blue-color">$???</span>
                                         <img src="/public/images/page/fire.png" style="width: 20px; height: 20px;" alt="">
                                     </div>
                                 </div>
                             </div>
+                            <%if(list[i].winname != null){%>
                             <div class="mt-4 d-flex justify-content-between align-items-center">
                                 <div class="d-flex gap-3 align-items-center">
-                                    <img src="/public/images/page/image.png" class="rounded-circle"
+                                    <img src="/public/images/user/<%= list[i].winavatar %>" class="rounded-circle"
                                     style="width: 60px; height: 60px;" alt="">
                                     <div class="d-flex flex-column">
-                                        <span class="dark-blue-color text fs-6 fw-bold">Quan Kudo</span>
-                                        <span class="primary-color text fs-6 fw-bold">$450</span>
+                                        <span class="dark-blue-color text fs-6 fw-bold"><%=list[i].winname%></span>
+                                        <span class="primary-color text fs-6 fw-bold">$<%=list[i].GiaThapNhat%></span>
                                     </div>
                                 </div>
                                 <div class="rounded-circle d-flex justify-content-center align-items-center" 
@@ -136,8 +143,10 @@
                                     <img src="/public/images/page/king.png" style="width: 25px; height: 25px;" alt="">
                                 </div>
                             </div>
+                            <%}%>
                         </div>
                     </div>
+                    </a>
                     <%} %>
                 </div>
             </div>

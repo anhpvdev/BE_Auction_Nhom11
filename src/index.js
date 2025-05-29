@@ -8,7 +8,7 @@ const http = require('http')
 const server = http.createServer(app)
 const {Server} = require('socket.io')
 
-const transocket = require('./resources/Service/socket/trans')
+const transocket = require('./resources/Service/socket')
 const io = new Server(server,{
     cors: {
         origin: "*",
