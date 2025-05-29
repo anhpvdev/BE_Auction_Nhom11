@@ -26,14 +26,12 @@ const UserServices = {
     login_post:async (req, res) => {
       try {
         const {username,password} = req.body
-        console.log(username,password)
 
         const user = await UserModel.getInfo_byEmail(username)
         if(!user) return res.render("Users/login.ejs",{message:"Account does not exist"})
 
         if(password!= user.MatKhau)  return res.render("Users/login.ejs",{message:"password is not corect"})
 
-        console.log(user)
         const user_cookie= {
             ID: user.MaNguoiDung,
             Email: user.Email,
@@ -61,13 +59,12 @@ const UserServices = {
     register_post:async (req, res) => {
       try {
         const {username,password} = req.body
-        console.log(username,password)
   
         const check = await UserModel.check_email(username)
         if(check) return res.render("Users/register.ejs",{message:"Email already exists"})
 
         const newUser = await UserModel.register(username,password)
-        console.log(newUser)
+
         if(newUser?.affectedRows == 0) return res.render('err.ejs')
         
         return res.redirect("/login")
@@ -159,7 +156,6 @@ const UserServices = {
         const {id,key,bid,user} = req.query
         if(!id || !key || !bid || !user) return res.redirect('/user/buy/error')
         
-        console.log(id,key,bid,user)
         const updateBill = await UserModel.updateBill(id,key)
 
         if(!updateBill) return res.redirect('/user/buy/error')
@@ -200,11 +196,11 @@ const UserServices = {
         const {price,content,bid} = req.body
         const userID = req.user.MaNguoiDung
         const billKey = crypto.randomBytes(16).toString('hex');
-        console.log(price,content,billKey);
+
         const bill = await UserModel.createBill(userID,content,billKey)
 
         if(bill.affectedRows > 0){
-           console.log(bill)
+
           const billID = bill.insertId
           const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
@@ -266,6 +262,38 @@ const UserServices = {
     
   },
 
+  auctiondeny_detail:async (req, res) => {
+      try{
+       const user = req.user
+       const ID = req.params.id
+
+        const aution = await AuctionModel.auction_detail(ID)
+
+        if(!aution || aution.MaNguoiMua != user.MaNguoiDung  ) return res.render("401.ejs")
+
+        return res.render("Users/auction_deny.ejs",{user:user,info:aution})
+      }catch(err){
+        console.log(err)
+        return res.render("err.ejs")
+      }
+    
+  },
+
+  auctiondeny_delete:async (req, res) => {
+      try{
+       const userID = req.user.MaNguoiDung
+       const {auctionID} = req.body
+
+       const auction = await AuctionModel.auction_delete(auctionID,userID)
+
+       return res.redirect('/user/history')
+
+      }catch(err){
+        console.log(err)
+        return res.render("err.ejs")
+      }
+    
+  },
 
   auction_now:async (req, res) => {
       try{
@@ -300,7 +328,7 @@ const UserServices = {
   auction_bid:async (req, res) => {
       try{
         const userID = req.user.MaNguoiDung
-        if(req.user.Bid < 1) return res.json("Vui lòng nạp thêm bid để đấu giá")
+        if(req.user.Bid < 1) return res.status(500).json({message:"Vui lòng nạp thêm bid để đấu giá"})
         const {BidID,price} = req.body
         const check = await AuctionModel.auction_bid_check(BidID)
 
@@ -356,14 +384,12 @@ const UserServices = {
       try{
        const userID = req.user.MaNguoiDung
        const {auctionID,title,content,open,close,price,step} = req.body
-       console.log(title,content)
-       console.log(open,close,price)
 
        const auction = await UserModel.updateAuction(auctionID,title,content,open,close,price,step)
 
        if(auction.affectedRows < 1) return res.render("err.ejs")
 
-        return res.redirect('/')
+        return res.redirect('/user/history')
       }catch(err){
         console.log(err)
         return res.render("err.ejs")
@@ -371,6 +397,47 @@ const UserServices = {
     
   },
 
+
+  userNoti:async (req, res) => {
+      try{
+       const userID = req.user.MaNguoiDung
+
+       const noti = await UserModel.getNoti(userID)
+
+        return res.status(200).json({status:"success",data:noti})
+      }catch(err){
+        console.log(err)
+        return res.status(500).json({status:"error"})
+      }
+    
+  },
+
+  history_auction: async (req, res) => {
+      try {
+        const userID = req.user.MaNguoiDung
+        const list = await  AuctionModel.all_auction_user(userID)
+
+
+        return res.render("Users/history.ejs",{user:req.user,list:list})
+
+      } catch (error) {
+        console.log(error)
+        return res.render("err.ejs")
+      }  
+    },
+
+    history_buybid: async (req, res) => {
+      try {
+        const userID = req.user.MaNguoiDung
+        const list = await  AuctionModel.history_buy(userID)
+
+        return res.render("Users/history_buy.ejs",{user:req.user,list:list})
+
+      } catch (error) {
+        console.log(error)
+        return res.render("err.ejs")
+      }  
+    },
 
   
 }

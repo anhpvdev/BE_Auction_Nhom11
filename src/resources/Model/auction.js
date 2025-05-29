@@ -31,7 +31,6 @@ const AuctionModel = {
 
         } catch (error) {
             console.log(error)
-            console.log(error)
         }
       
     },
@@ -52,7 +51,6 @@ const AuctionModel = {
 
         } catch (error) {
             console.log(error)
-            console.log(error)
         }
       
     },
@@ -68,6 +66,20 @@ const AuctionModel = {
 
         } catch (error) {
             console.log(error)
+        }
+      
+    },
+
+    all_auction_user:async (userID) => {
+        try {
+            var query = `SELECT p.MaPhienDauGia, p.TrangThai as tt,s.TrangThai, s.MaSanPham , s.MaNguoiMua,n.HoVaTen,n.Avatar, s.TieuDe,s.MoTa,DATE_FORMAT(s.NgayDangKy, '%H:%i %d/%m/%Y') as NgayBatDau FROM phiendaugia as p RIGHT JOIN sanphamdangky as s on s.MaSanPham = p.MaSanPham LEFT JOIN nguoidung as n on n.MaNguoiDung = s.MaNguoiMua WHERE s.MaNguoiMua = ? ORDER by s.NgayBatDau DESC;`
+            const [data] = await db.query(query,[userID])
+
+        
+
+            return data
+
+        } catch (error) {
             console.log(error)
         }
       
@@ -75,12 +87,11 @@ const AuctionModel = {
 
     cate_auction_work:async (page,type,category) => {
         try {
-            var query = `SELECT p.MaPhienDauGia, p.TrangThai, p.MaSanPham,p.GiaThapNhat,p.MaNguoiBan , s.MaNguoiMua, s.NganSachToiDa,s.BuocGia,n.HoVaTen,n.Avatar, s.TieuDe,s.MoTa,DATE_FORMAT(s.NgayBatDau, '%H:%i %d/%m/%Y') as NgayBatDau,DATE_FORMAT(s.NgayKetThuc, '%H:%i %d/%m/%Y') as NgayKetThuc , nw.HoVaTen as winname, nw.Avatar as winavatar FROM phiendaugia as p LEFT JOIN sanphamdangky as s on s.MaSanPham = p.MaSanPham LEFT JOIN nguoidung as n on n.MaNguoiDung = s.MaNguoiMua LEFT JOIN nguoidung as nw on nw.MaNguoiDung = p.MaNguoiBan WHERE p.TrangThai = ? and s.MaDanhMuc = ? ORDER by s.NgayBatDau DESC;`
+            var query = `SELECT p.MaPhienDauGia, p.TrangThai, p.MaSanPham,p.GiaThapNhat,p.MaNguoiBan , s.MaNguoiMua, s.NganSachToiDa,s.BuocGia,n.HoVaTen,n.Avatar, s.TieuDe,s.MoTa,DATE_FORMAT(s.NgayBatDau, '%H:%i %d/%m/%Y') as NgayBatDau,DATE_FORMAT(s.NgayKetThuc, '%H:%i %d/%m/%Y') as NgayKetThuc , nw.HoVaTen as winname, nw.Avatar as winavatar FROM phiendaugia as p LEFT JOIN sanphamdangky as s on s.MaSanPham = p.MaSanPham LEFT JOIN nguoidung as n on n.MaNguoiDung = s.MaNguoiMua LEFT JOIN nguoidung as nw on nw.MaNguoiDung = p.MaNguoiBan WHERE p.TrangThai = ? and s.MaDanhMuc = ? and s.NgayBatDau < NOW() ORDER by s.NgayBatDau DESC;`
             const [data] = await db.query(query,[type,category])
 
             return data
         } catch (error) {
-            console.log(error)
             console.log(error)
         }
       
@@ -100,9 +111,37 @@ const AuctionModel = {
       
     },
 
+    auction_delete:async (auctionID,userID) => {
+        try {
+            var query = `DELETE FROM sanphamdangky WHERE TrangThai = 2 and MaNguoiMua = ? and MaSanPham = ?;`
+            const [data] = await db.query(query,[userID,auctionID])
+
+            return data
+
+        } catch (error) {
+            console.log(error)
+           return []
+        }
+      
+    },
+
+    auction_detail_deny:async (ID) => {
+        try {
+            var query = `SELECT s.MaSanPham,s.MaNguoiMua,s.MaDanhMuc,s.TieuDe,s.MoTa,s.NganSachToiDa,s.BuocGia,s.TrangThai,s.PhanHoi,DATE_FORMAT(s.NgayBatDau, '%Y-%m-%d %H:%i') AS NgayBatDau, DATE_FORMAT(s.NgayKetThuc, '%Y-%m-%d %H:%i') AS NgayKetThuc , n.HoVaTen,n.Avatar from sanphamdangky as s LEFT JOIN nguoidung as n on n.MaNguoiDung = s.MaNguoiMua WHERE MaSanPham = ?;`
+            const [data] = await db.query(query,[ID])
+
+            return data[0]
+
+        } catch (error) {
+            console.log(error)
+           return []
+        }
+      
+    },
+
     auction_now_detail:async (ID) => {
         try {
-            var query = `SELECT p.MaPhienDauGia,sp.MaSanPham, sp.MaNguoiMua, sp.MaDanhMuc, sp.TieuDe, sp.MoTa, sp.NganSachToiDa, sp.BuocGia, p.TrangThai, sp.PhanHoi,DATE_FORMAT( sp.NgayBatDau, '%Y-%m-%d %H:%i') AS NgayBatDau, DATE_FORMAT( sp.NgayKetThuc, '%Y-%m-%d %H:%i') AS NgayKetThuc , n.HoVaTen ,n.Avatar FROM phiendaugia as p LEFT JOIN sanphamdangky as sp on sp.MaSanPham = p.MaSanPham LEFT JOIN nguoidung as n on n.MaNguoiDung = sp.MaNguoiMua WHERE p.MaPhienDauGia = ? and n.TrangThai = 1;`
+            var query = `SELECT p.MaPhienDauGia,sp.MaSanPham, sp.MaNguoiMua, sp.MaDanhMuc, sp.TieuDe, sp.MoTa, sp.NganSachToiDa, sp.BuocGia, p.TrangThai, sp.PhanHoi,DATE_FORMAT( sp.NgayBatDau, '%Y-%m-%d %H:%i') AS NgayBatDau, DATE_FORMAT( sp.NgayKetThuc, '%Y-%m-%d %H:%i') AS NgayKetThuc , n.HoVaTen ,n.Avatar FROM phiendaugia as p RIGHT JOIN sanphamdangky as sp on sp.MaSanPham = p.MaSanPham LEFT JOIN nguoidung as n on n.MaNguoiDung = sp.MaNguoiMua WHERE p.MaPhienDauGia = ? and n.TrangThai = 1;`
             const [data] = await db.query(query,[ID])
 
             return data[0]
@@ -193,6 +232,20 @@ WHERE ls.MaPhienDauGia = ? ORDER by ls.GiaDaDauGia ASC`
             const [data] = await db.query(query,[BidID,UserID,price])
             
             await db.query(`UPDATE phiendaugia SET GiaThapNhat=?,MaNguoiBan=? WHERE MaPhienDauGia = ?`,[price,UserID,BidID])
+
+            return data
+
+        } catch (error) {
+            console.log(error)
+           return []
+        }
+      
+    },
+
+    history_buy:async (UserID) => {
+        try {
+            var query = `select * from thanhtoan where MaNguoiDung =?`
+            const [data] = await db.query(query,[UserID])
 
             return data
 

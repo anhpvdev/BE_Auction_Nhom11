@@ -7,22 +7,21 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link rel="stylesheet" href="/public/css/admin.css">
+        <link rel="stylesheet" href="/public/css/style.css">
 </head>
 <body>
+     <%- include('./partials/header.ejs') %>
     <div class="d-flex">
         <!-- Navbar -->
-        <%- include('./partials/navbar.ejs') %>
+        <%- include('./partials/info_menu.ejs') %>
         <div style="width: 80%;">
             <!-- Header -->
-            <%- include('./partials/header.ejs') %>
+             
             <!-- Section body -->
             <section style="margin-top: 57px;">
                 <div>
-                    <h4 class="dark-blue-color text fs-6 px-4 py-3 bg-white">DANH SÁCH SẢN PHẨM</h4>
+                    <h4 class="dark-blue-color text fs-6 px-4 py-3 bg-white">Lịch sử đăng ký</h4>
                 </div>
-                <button class="button-primary block px-3 py-2 w-100 mt-4" style="margin-top: 20px;">
-                 <a href="?type=0" class="justify-content-left">Phiên đã kết thúc</a>
-               </button>
 
                 <div class="bg-light p-3">
                     <table>
@@ -30,7 +29,7 @@
                             <th style="width: 5%;">#</th>
                             <th style="width: 5%;">ID</th>
                             <th style="width: 35%;">Nội dung</th>
-                            <th style="width: 15%;">Người đăng</th>
+                            <th style="width: 15%;">Trạng thái</th>
                             <th style="width: 20%;">Thời gian bắt đầu</th>
                             <th style="width: 20%;">Hành động</th>
                         </thead>
@@ -45,13 +44,34 @@
                                         <%-list[i].MoTa%>
                                     </div>
                                 </td>
-                                <td class="text-center"><%-list[i].HoVaTen%></td>
+                                <td class="text-center"><% if(list[i].TrangThai == 0){ %>
+                                    Chờ xử lý
+                                <%}else if(list[i].TrangThai == 1) {%>
+                                    <% if(list[i].tt == 1){ %>
+                                    Đang diễn ra
+                                    <%}else {%>
+                                        Đã kết thúc
+                                      <%}%>  
+                                <%}else if(list[i].TrangThai == 2) {%>
+                                    Bị từ chối
+                                    <%}%>
+                                </td>
                                 <td class="text-center"><%-list[i].NgayBatDau%></td>
                                 <td>
                                     <div class="d-flex gap-2">
-                                        <a href="/admin/auction/<%=list[i].MaSanPham%>" class="flex-fill px-3 py-2">
-                                        <button class="flex-fill px-3 py-2 rounded text-white" style="background-color: rgb(12, 136, 5);">Xem</button>
-                                        </a>
+                                        <% if(list[i].TrangThai == 2){ %>
+                                            <a href="/user/auction-deny/<%=list[i].MaSanPham%>" class="flex-fill px-3 py-2">
+                                            <button class="flex-fill px-3 py-2 rounded text-white" style="background-color: rgb(12, 136, 5);">Xem</button>
+                                            </a>
+                                        <%}else if(list[i].TrangThai == 1) {%>
+                                            <a href="/auction/detail/<%=list[i].MaPhienDauGia%>" class="flex-fill px-3 py-2">
+                                            <button class="flex-fill px-3 py-2 rounded text-white" style="background-color: rgb(12, 136, 5);">Xem</button>
+                                            </a>
+                                        <%}else if(list[i].TrangThai == 0) {%>
+                                            <a href="/user/auction/<%=list[i].MaSanPham%>" class="flex-fill px-3 py-2">
+                                            <button class="flex-fill px-3 py-2 rounded text-white" style="background-color: rgb(12, 136, 5);">Xem</button>
+                                            </a>
+                                        <%}%>
                                     </div>
                                 </td>
                             </tr>
