@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th5 28, 2025 lúc 10:50 AM
+-- Thời gian đã tạo: Th5 30, 2025 lúc 10:03 AM
 -- Phiên bản máy phục vụ: 10.4.27-MariaDB
 -- Phiên bản PHP: 8.2.0
 
@@ -77,7 +77,21 @@ CREATE TABLE `lichsudaugia` (
 INSERT INTO `lichsudaugia` (`MaLichSu`, `MaPhienDauGia`, `MaNguoiBan`, `GiaDaDauGia`, `ThoiGianDauGia`, `TrangThaiDauGia`, `MoTa`) VALUES
 (5, 2, 3, '100000.00', '2025-05-28 07:44:43', 1, NULL),
 (6, 2, 3, '99900.00', '2025-05-28 07:51:42', 1, NULL),
-(7, 4, 3, '9999990.00', '2025-05-28 08:08:46', 1, NULL);
+(7, 4, 3, '9999990.00', '2025-05-28 08:08:46', 1, NULL),
+(8, 6, 2, '9900.00', '2025-05-28 12:08:28', 1, NULL),
+(9, 6, 2, '9000.00', '2025-05-28 12:10:09', 1, NULL),
+(10, 6, 2, '8500.00', '2025-05-28 13:21:22', 1, NULL),
+(11, 6, 2, '8400.00', '2025-05-28 13:23:48', 1, NULL),
+(12, 6, 4, '8300.00', '2025-05-28 13:25:42', 1, NULL),
+(13, 6, 2, '8200.00', '2025-05-28 13:25:51', 1, NULL),
+(14, 7, 1, '9900.00', '2025-05-29 07:33:15', 1, NULL),
+(15, 7, 1, '9800.00', '2025-05-29 07:33:23', 1, NULL),
+(16, 4, 5, '9000000.00', '2025-05-30 07:05:03', 1, NULL),
+(17, 6, 5, '8000.00', '2025-05-30 07:12:08', 1, NULL),
+(18, 6, 1, '7900.00', '2025-05-30 07:12:43', 1, NULL),
+(19, 6, 5, '7800.00', '2025-05-30 07:12:49', 1, NULL),
+(20, 6, 1, '7700.00', '2025-05-30 07:12:53', 1, NULL),
+(21, 6, 2, '7500.00', '2025-05-30 07:14:29', 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -108,11 +122,12 @@ CREATE TABLE `nguoidung` (
 --
 
 INSERT INTO `nguoidung` (`MaNguoiDung`, `MaPhuongXa`, `HoVaTen`, `Mota`, `Email`, `MatKhau`, `SoDienThoai`, `DiaChi`, `Avatar`, `Bid`, `NgaySinh`, `GioiTinh`, `TrangThai`, `VaiTro`, `NgayTao`) VALUES
-(1, NULL, 'Admin', NULL, 'nhom11@gmail.com', '123123', NULL, NULL, 'default.jpg', 100, NULL, 'Nam', 1, 'Admin', '2025-05-13 04:58:37'),
-(2, NULL, 'Quan Nguyen', NULL, 'maviess10@gmail.com', '123123', NULL, NULL, 'default.jpg', 165, NULL, 'Nam', 1, 'User', '2025-05-13 05:00:41'),
+(1, NULL, 'Admin', NULL, 'nhom11@gmail.com', '123123', NULL, NULL, 'default.jpg', 96, NULL, 'Nam', 1, 'Admin', '2025-05-13 04:58:37'),
+(2, NULL, 'Việt Anh Phan A', NULL, 'maviess10@gmail.com', '123123', NULL, NULL, '2.jpg', 150, NULL, 'Nam', 1, 'User', '2025-05-13 05:00:41'),
 (3, NULL, 'tesst A', NULL, 'a@gmail.com', '123123', NULL, NULL, 'default.jpg', 195, NULL, 'Nam', 1, 'Staff', '2025-05-13 10:12:37'),
-(4, NULL, 'UserName', NULL, 'b@gmail.com', '123123', NULL, NULL, 'default.jpg', 0, NULL, NULL, 1, 'User', '2025-05-13 10:12:53'),
-(5, NULL, 'UserName', NULL, 'c@gmail.com', '123123', NULL, NULL, 'default.jpg', 0, NULL, NULL, 1, 'User', '2025-05-13 10:13:00');
+(4, NULL, 'UserName', NULL, 'b@gmail.com', '123123', NULL, NULL, 'default.jpg', 99, NULL, NULL, 1, 'User', '2025-05-13 10:12:53'),
+(5, NULL, 'UserName', NULL, 'c@gmail.com', '123123', NULL, NULL, 'default.jpg', 97, NULL, NULL, 1, 'User', '2025-05-13 10:13:00'),
+(6, NULL, 'Fake Juu', NULL, 'fosher269@gmail.com', '123123', NULL, NULL, 'default.jpg', 0, NULL, 'Nam', 1, 'User', '2025-05-30 02:52:27');
 
 -- --------------------------------------------------------
 
@@ -137,9 +152,10 @@ CREATE TABLE `phiendaugia` (
 INSERT INTO `phiendaugia` (`MaPhienDauGia`, `MaNhanVien`, `MaSanPham`, `TrangThai`, `TrangThaiXoa`, `GiaThapNhat`, `MaNguoiBan`) VALUES
 (2, 1, 3, 0, 0, '99900.00', 3),
 (3, 1, 2, 0, 0, '0.00', NULL),
-(4, 1, 4, 1, 0, '9999990.00', 3),
+(4, 1, 4, 1, 0, '9000000.00', 5),
 (5, 3, 1, 0, 0, '0.00', NULL),
-(6, 1, 7, 1, 0, NULL, NULL);
+(6, 1, 7, 0, 0, '7500.00', 2),
+(7, 1, 9, 1, 0, '9800.00', 1);
 
 -- --------------------------------------------------------
 
@@ -265,8 +281,9 @@ INSERT INTO `sanphamdangky` (`MaSanPham`, `MaNguoiMua`, `MaDanhMuc`, `TieuDe`, `
 (2, 2, 2, 'Xây nhà 400m2', '<p><strong>asdasdasdsaasd 123</strong></p><ol><li>123123</li><li>123123</li><li>123123</li><li>22asda</li></ol>', '100000000.00', '50', 1, '2025-05-13 08:30:32', '2025-05-13 15:29:00', '2025-05-27 15:29:00', NULL),
 (3, 2, 2, 'Mua 3 tấn vật liệu', '<p><strong>ádasda123</strong></p><ol><li>123123123</li><li>ádasd</li><li>ádasd</li><li>ádasd</li><li>ád</li><li><br></li></ol>', '123123.00', '100', 1, '2025-05-13 08:50:51', '2025-05-14 15:50:00', '2025-05-28 14:56:00', NULL),
 (4, 2, 2, 'test', '<p>ádasdasasdasdsa</p><p>ádasd</p><p>áda</p><p>ds</p>', '9999999.00', '0', 1, '2025-05-13 08:52:41', '2025-05-06 19:52:00', '2025-05-31 00:00:00', NULL),
-(7, 3, 1, 'Xây dựng website mua bán', '<p>ádasdsaasda</p><p>sdasdsa</p><p>ádasdas</p><p>ádasas</p><p>ádasdsad</p>', '10000.00', '100', 1, '2025-05-28 08:18:23', '2025-05-28 15:18:00', '2025-05-31 15:18:00', NULL),
-(8, 3, 2, 'THiết kế app đọc truyện', '<p>ádasdassa</p><p>ádasdasd</p><p>ádasdsaasd</p><p>ádasdassada</p><p>ádasdasasds</p><p>ádasdsaasd</p>', '8000.00', '50', 2, '2025-05-28 08:36:15', '2025-05-28 15:36:00', '2025-05-30 15:36:00', 'yêu cầu chưa rõ ràng');
+(7, 3, 1, 'Xây dựng website mua bán', '<p>ádasdsaasda</p><p>sdasdsa</p><p>ádasdas</p><p>ádasas</p><p>ádasdsad</p>', '10000.00', '100', 1, '2025-05-28 08:18:23', '2025-05-28 15:18:00', '2025-05-30 12:18:00', NULL),
+(8, 3, 2, 'THiết kế app đọc truyện', '<p>ádasdassa</p><p>ádasdasd</p><p>ádasdsaasd</p><p>ádasdassada</p><p>ádasdasasds</p><p>ádasdsaasd</p>', '8000.00', '50', 2, '2025-05-28 08:36:15', '2025-05-28 15:36:00', '2025-05-30 15:36:00', 'yêu cầu chưa rõ ràng'),
+(9, 2, 2, 'Thiết kế website quản lý', '<p>ádasdasdas</p><p>ádasdasasd</p><p>ádasasdasd</p><p>ádassdasd</p>', '10000.00', '100', 1, '2025-05-29 06:54:21', '2025-05-29 13:54:00', '2025-05-31 13:54:00', NULL);
 
 -- --------------------------------------------------------
 
@@ -290,10 +307,12 @@ CREATE TABLE `thanhtoan` (
 INSERT INTO `thanhtoan` (`MaThanhToan`, `MaNguoiDung`, `NoiDung`, `Key`, `TrangThai`, `NgayTao`) VALUES
 (1, 1, 'Mua Goi bid $50', '4f1121ed7aff861ea9244f46e9df1fbe', 1, '2025-05-13 07:32:56'),
 (2, 1, 'Mua Goi bid $50', '5a1243d98207fa6151eeb691fa0e303c', 1, '2025-05-13 07:35:04'),
-(3, 1, 'Mua Goi bid $50', 'e70726f52fceb35541ba6c330e9d13d9', 1, '2025-05-13 07:56:36'),
-(4, 3, 'Mua Goi bid $50', 'd90bc3d02b24f693ded7aa9c8c62647f', 1, '2025-05-28 08:33:14'),
+(3, 2, 'Mua Goi bid $50', 'e70726f52fceb35541ba6c330e9d13d9', 1, '2025-05-13 07:56:36'),
+(4, 2, 'Mua Goi bid $50', 'd90bc3d02b24f693ded7aa9c8c62647f', 1, '2025-05-28 08:33:14'),
 (5, 3, 'Mua Goi bid $50', '0d7afa4fc2420b644706cd4b37a002b5', 0, '2025-05-28 08:34:57'),
-(6, 3, 'Mua Goi bid $50', '0db6af768102a6fc87df8b70160e4a6e', 1, '2025-05-28 08:35:27');
+(6, 3, 'Mua Goi bid $50', '0db6af768102a6fc87df8b70160e4a6e', 1, '2025-05-28 08:35:27'),
+(7, 4, 'Mua Goi bid $50', 'db924be938850e40e549f5c84dcdf847', 1, '2025-05-28 13:25:12'),
+(8, 5, 'Mua Goi bid $50', '5581c60bc7c6bcec790847f7b5b1fdbf', 1, '2025-05-30 07:03:49');
 
 -- --------------------------------------------------------
 
@@ -308,6 +327,16 @@ CREATE TABLE `thongbao` (
   `TrangThai` int(1) DEFAULT 0,
   `ThoiGian` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `thongbao`
+--
+
+INSERT INTO `thongbao` (`MaThongBao`, `MaNguoiDung`, `NoiDung`, `TrangThai`, `ThoiGian`) VALUES
+(1, 2, 'Sản phẩm đấu giá của bạn đã được duyệt.', 0, '2025-05-29 07:02:24'),
+(2, 2, 'Sản phẩm đấu giá của bạn đã được duyệt.', 0, '2025-05-29 08:10:14'),
+(3, 2, 'Sản phẩm đấu giá của bạn đã bị từ chối.', 0, '2025-05-29 08:10:46'),
+(4, 2, 'Sản phẩm đấu giá của bạn đã bị từ chối.', 0, '2025-05-29 08:59:32');
 
 -- --------------------------------------------------------
 
@@ -433,19 +462,19 @@ ALTER TABLE `hinhanh`
 -- AUTO_INCREMENT cho bảng `lichsudaugia`
 --
 ALTER TABLE `lichsudaugia`
-  MODIFY `MaLichSu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `MaLichSu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT cho bảng `nguoidung`
 --
 ALTER TABLE `nguoidung`
-  MODIFY `MaNguoiDung` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `MaNguoiDung` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT cho bảng `phiendaugia`
 --
 ALTER TABLE `phiendaugia`
-  MODIFY `MaPhienDauGia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `MaPhienDauGia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT cho bảng `phuongxa`
@@ -463,13 +492,19 @@ ALTER TABLE `quanhuyen`
 -- AUTO_INCREMENT cho bảng `sanphamdangky`
 --
 ALTER TABLE `sanphamdangky`
-  MODIFY `MaSanPham` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `MaSanPham` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT cho bảng `thanhtoan`
 --
 ALTER TABLE `thanhtoan`
-  MODIFY `MaThanhToan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `MaThanhToan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT cho bảng `thongbao`
+--
+ALTER TABLE `thongbao`
+  MODIFY `MaThongBao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Các ràng buộc cho các bảng đã đổ
@@ -537,7 +572,7 @@ DELIMITER $$
 --
 -- Sự kiện
 --
-CREATE DEFINER=`root`@`localhost` EVENT `capnhat_trangthai_phiendaugia` ON SCHEDULE EVERY 1 MINUTE STARTS '2025-05-28 11:21:18' ON COMPLETION NOT PRESERVE ENABLE DO UPDATE phiendaugia p
+CREATE DEFINER=`root`@`localhost` EVENT `capnhat_trangthai_phiendaugia` ON SCHEDULE EVERY 1 MINUTE STARTS '2025-05-30 14:11:46' ON COMPLETION NOT PRESERVE ENABLE DO UPDATE phiendaugia p
   JOIN sanphamdangky s ON p.MaSanPham = s.MaSanPham
   SET p.TrangThai = 0
   WHERE s.NgayKetThuc < NOW() AND p.TrangThai != 0$$

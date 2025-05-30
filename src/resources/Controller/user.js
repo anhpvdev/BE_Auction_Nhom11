@@ -391,8 +391,7 @@ const UserServices = {
   auction_post:async (req, res) => {
       try{
        const userID = req.user.MaNguoiDung
-       const {title,content,open,close,price,step} = req.body
-       const tag = 2
+       const {title,content,open,close,price,step,tag} = req.body
 
        const auction = await UserModel.addAuction(userID,title,content,open,close,price,step,tag)
 
