@@ -20,6 +20,7 @@
                                 <button class="primary-color fw-semibold px-3 py-1 rounded-pill" style="background-color: rgba(255, 85, 0, 0.544);">Tất cả</button>
                                 <button class="bg-white">Chưa đọc</button>
                             </div>
+                          
                             <div>
                                 <div>
                                     <div class="d-flex justify-content-between align-items-center mb-2">
@@ -27,33 +28,7 @@
                                         <a href="" class="primary-color">Xem tất cả</a>
                                     </div>
                                     <div class="d-flex flex-column gap-3" id="new_noti">
-                                        <!-- <div class="d-flex gap-3 align-items-center">
-                                            <img src="/public/images/page/image.png" class="rounded-circle" style="width: 50px; height: 50px;" alt="">
-                                            <div>
-                                                <p class="flex-fill fs-7">Bắt đầu đấu giá: "Phiên đấu giá cho sản 
-                                                    phẩm X của bạn đã bắt đầu."</p>
-                                                <span class="primary-color fst-italic">2 phút</span>
-                                            </div>
-                                            <div class="primary-bg-color rounded-circle" style="width: 15px; height: 15px;"></div>
-                                        </div>
-                                        <div class="d-flex gap-3 align-items-center">
-                                            <img src="/public/images/page/image.png" class="rounded-circle" style="width: 50px; height: 50px;" alt="">
-                                            <div>
-                                                <p class="flex-fill fs-7">Bắt đầu đấu giá: "Phiên đấu giá cho sản 
-                                                    phẩm X của bạn đã bắt đầu."</p>
-                                                <span class="primary-color fst-italic">2 phút</span>
-                                            </div>
-                                            <div class="primary-bg-color rounded-circle" style="width: 15px; height: 15px;"></div>
-                                        </div>
-                                        <div class="d-flex gap-3 align-items-center">
-                                            <img src="/public/images/page/image.png" class="rounded-circle" style="width: 50px; height: 50px;" alt="">
-                                            <div>
-                                                <p class="flex-fill fs-7">Bắt đầu đấu giá: "Phiên đấu giá cho sản 
-                                                    phẩm X của bạn đã bắt đầu."</p>
-                                                <span class="primary-color fst-italic">2 phút</span>
-                                            </div>
-                                            <div class="primary-bg-color rounded-circle" style="width: 15px; height: 15px;"></div>
-                                        </div> -->
+                                      
                                     </div>
                                 </div>
                                 <!-- <div>
@@ -61,15 +36,6 @@
                                         <span class="fw-bold fs-6 text">Trước đó</span>
                                     </div>
                                     <div class="d-flex flex-column gap-3">
-                                        <div class="d-flex gap-3 align-items-center">
-                                            <img src="/public/images/page/image.png" class="rounded-circle" style="width: 50px; height: 50px;" alt="">
-                                            <div>
-                                                <p class="flex-fill fs-7">Bắt đầu đấu giá: "Phiên đấu giá cho sản 
-                                                    phẩm X của bạn đã bắt đầu."</p>
-                                                <span class="primary-color fst-italic">2 phút</span>
-                                            </div>
-                                            <div class="primary-bg-color rounded-circle" style="width: 15px; height: 15px;"></div>
-                                        </div>
                                         <div class="d-flex gap-3 align-items-center">
                                             <img src="/public/images/page/image.png" class="rounded-circle" style="width: 50px; height: 50px;" alt="">
                                             <div>
@@ -92,12 +58,19 @@
             <hr class="m-0 p-0"/>
             <!-- Header bottom -->
             <div class="d-flex justify-content-between align-items-center F5EDCE-bg-color" style="padding: 0 9%;">
-                <div class="d-flex align-items-center gap-1">
-                    <img src="/public/images/page/image.png" alt="" style="width: 80px;">
-                    <span class="primary-color fs-3 text">Reddit.</span>
-                </div>
-                <div class="border border-black rounded d-flex align-items-center px-3 py-2 bg-light">
-                    <input type="text" class="bg-light" style="width:300px;" placeholder="Tìm kiếm sản phẩm...">
+                <a href="/">
+                    <div class="d-flex align-items-center gap-1">
+                        <img src="/public/images/page/image.png" alt="" style="width: 80px;">
+                        <span class="primary-color fs-3 text">Reddit.</span>
+                    </div>
+                </a>
+                <div class="border border-black rounded d-flex align-items-center px-3 py-2 bg-light" id="search_box">
+                    <div class="d-flex flex-column gap-3" id="search_list">
+                                       
+                                        
+                                        
+                                    </div>
+                    <input id="input_seach" type="text" class="bg-light" style="width:300px;" placeholder="Tìm kiếm sản phẩm...">
                     <div>
                         <i class="fa-solid fa-magnifying-glass primary-color"></i>
                     </div>
@@ -140,4 +113,51 @@
             }
 
             get_noti()
+
+             var autocomplete = null;
+    $("#input_seach").bind( "keyup", function( event ) {
+        var that = $(this);
+        var keyWord = $(this).val();
+        var key = event.keyCode;
+        if (key != 38 && key != 40 && key != 37 && key != 39 && key != 13) {
+            if(keyWord.trim().length > 2){
+                clearTimeout(autocomplete);
+                autocomplete = setTimeout(function(){
+                    console.log(keyWord)
+                    $('#search_list').addClass('show');
+                    $.ajax({
+                        type: "get",
+                        url: "/search/auction",
+                        data: { key: keyWord}
+                    }).done(function( response ) {
+                        var data = response.data
+                       if(data.length >0){
+
+                        let bind_data = ""
+                        for(let i=0;i<data.length;i++){
+                            bind_data+= `<div class="d-flex gap-3 align-items-center item">
+                                              <a href="/auction/detail/${data[i].MaPhienDauGia}" class="d-flex gap-3 align-items-center">           
+                                <img src="/public/images/user/${data[i].Avatar}" class="rounded-circle" style="width: 50px; height: 50px;" alt="">
+                                            <div>
+                                                <p class="flex-fill fs-7">${data[i].TieuDe}</p>
+                                                <span class="primary-color fst-italic">${data[i].NgayKetThuc}</span>
+                                            </div>
+                                            ${data[i].TrangThai == 1 ? '<div class="primary-bg-color rounded-circle" style="width: 15px; height: 15px;"></div>' : ''}
+                                            </a> 
+                                        </div>`
+                        }
+                        $('#search_list').html(bind_data)
+                       }else{
+                        $('#search_list').html("")
+                        $('#search_list').removeClass('show');
+                       }
+                    });
+                }, 500);
+            }else{
+               $('#search_list').html("")
+               $('#search_list').removeClass('show');
+            }
+        }
+    });
+
         </script>

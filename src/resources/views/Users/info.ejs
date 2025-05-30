@@ -7,6 +7,28 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link rel="stylesheet" href="/public/css/style.css">
+
+    <style>
+        
+.input_avt{
+    display: flex;
+    align-items: center;
+    margin: 0px 20px;
+}
+
+.input_avt label{
+    padding: 5px 10px;
+    font-size: 16px;
+    background-color: #0faadb;
+    color: white;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    width: fit-content;
+    align-items: center;
+}
+    </style>
 </head>
 <body>
 
@@ -16,12 +38,21 @@
         <!-- left -->
         <%- include('./partials/info_menu.ejs') %>
         <!-- right -->
-        <form action="/user/info" method="post" class="p-3 bg-white rounded" style="width: 71%;">
+        <form action="/user/info" method="post" class="p-3 bg-white rounded" style="width: 71%;" enctype="multipart/form-data">
             <h4 class="text fs-4 dark-blue-color">Thông tin tài khoản</h4>
             <div class="d-flex flex-column align-items-center gap-1 mt-5">
-                <img src="/public/images/user/<%=user.Avatar%>" class="rounded-circle p-1" 
+                <img src="/public/images/user/<%=user.Avatar%>" class="rounded-circle p-1 avatar_show" 
                     style="width: 100px; height: 100px; border: 2px solid orangered;" alt="">
-                <span class="dark-blue-color text fs-4 fw-semibold">Quan Nguyen</span>
+                <span class="dark-blue-color text fs-4 fw-semibold"><%=user.HoVaTen%></span>
+                <div class="input_avt">
+                            <label for="avatarinput">
+                                <svg width="20" height="20" fill="white" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M0 16v-1.984q0-3.328 2.336-5.664t5.664-2.336q1.024 0 2.176 0.352 0.576-2.752 2.784-4.544t5.056-1.824q3.296 0 5.632 2.368t2.368 5.632q0 0.896-0.32 2.048 0.224-0.032 0.32-0.032 2.464 0 4.224 1.76t1.76 4.224v2.016q0 2.496-1.76 4.224t-4.224 1.76h-0.384q0.288-0.8 0.352-1.44 0.096-1.312-0.32-2.56t-1.408-2.208l-4-4q-1.76-1.792-4.256-1.792t-4.224 1.76l-4 4q-0.96 0.96-1.408 2.24t-0.32 2.592q0.032 0.576 0.256 1.248-2.72-0.608-4.512-2.784t-1.792-5.056zM10.016 22.208q-0.096-0.96 0.576-1.6l4-4q0.608-0.608 1.408-0.608 0.832 0 1.408 0.608l4 4q0.672 0.64 0.608 1.6-0.032 0.288-0.16 0.576-0.224 0.544-0.736 0.896t-1.12 0.32h-1.984v6.016q0 0.832-0.608 1.408t-1.408 0.576-1.408-0.576-0.576-1.408v-6.016h-2.016q-0.608 0-1.088-0.32t-0.768-0.896q-0.096-0.288-0.128-0.576z"></path>
+                                </svg>
+                                Chọn ảnh bìa
+                            </label>
+                            <input id="avatarinput" type="file" name="avatar" class="curent_image" accept="image/*" hidden>
+                </div>
             </div>
 
             <div class="px-5 mt-4 d-flex flex-column" style="gap: 2rem;">
@@ -62,6 +93,33 @@
     </section>
 
   <%- include('./partials/footer.ejs') %>
+
+  <script>
+        const curent_image = document.querySelector(".curent_image")
+        const avatar_show = document.querySelector(".avatar_show")
+
+        curent_image.addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            console.log(file)
+            const max_size = 2 * 1024 * 1024; // 3MB
+
+            if (file && file.size > max_size) {
+                alert("File quá lớn! Giới hạn là 2MB.");
+                this.value = ""; // Clear file input
+            }else{
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    const imageUrl = e.target.result;
+                    console.log(imageUrl)
+                    avatar_show.src = imageUrl;
+                };
+    
+                reader.readAsDataURL(file);
+            }
+        });
+
+  </script>
    
 </body>
 </html>

@@ -176,6 +176,8 @@
             var bid_top = $("#bid_top").html()
             if(bid_top > 0 && Bid_price > bid_top - bid_step) return alert("Giá không được cao hơn bước giá")
 
+            if(confirm('Bạn có chắc chắn muốn tham gia đấu giá')){
+                
             $.ajax({
                 type: "post",
                 url: "/auction/bid",
@@ -187,12 +189,15 @@
                     var userData = response.data
                     if(userData){
                         socket.emit('send_bid', { roomId: RoomID, data: userData });
+                        var Bid_price = $('#bid_price').val('')
                     }
                 }, error: function (error) {
                     var message = error.responseJSON?.message
                     message?.length > 0 ? alert(message) : alert("có lỗi sảy ra") ;
                 }
             })
+            }
+
         })
 
 

@@ -10,10 +10,10 @@ const UserModel = {
     login_gg:async (data) => {
         try {
            
-            let [user] = await db.query(`SELECT * FROM nguoidung WHERE taiKhoan = ?`,[data.email])
+            let [user] = await db.query(`SELECT * FROM nguoidung WHERE Email = ?`,[data.email])
             
             if(user.length == 0){
-                let [newuser] = await db.query(`INSERT INTO nguoidung(taiKhoan, hoVaTen) VALUES (?,?)`,[data.email,data.name])   
+                let [newuser] = await db.query(`INSERT INTO nguoidung(Email, HoVaTen) VALUES (?,?)`,[data.email,data.name])   
 
                 const userId = newuser.insertId;
                 const [userInfo] = await db.query(`SELECT * FROM nguoidung WHERE maNguoiDung = ?`,[userId]  );
@@ -94,9 +94,23 @@ const UserModel = {
 
     update_info:async (name,gender,ID) => {
         try {
-             console.log(name,gender,ID)
             const update ="UPDATE nguoidung SET HoVaTen=?,GioiTinh=? WHERE MaNguoiDung = ?"
             const [user] = await db.query(update,[name,gender,ID])
+
+            return user
+
+
+        } catch (error) {
+            console.log(error)
+           return []
+        }
+      
+    },
+
+    update_avatar:async (ID,url) => {
+        try {
+            const update ="UPDATE nguoidung SET Avatar=? WHERE MaNguoiDung = ?"
+            const [user] = await db.query(update,[url,ID])
 
             return user
 
@@ -120,6 +134,20 @@ const UserModel = {
         } catch (error) {
             console.log(error)
            return []
+        }
+      
+    },
+
+    change_pass:async (userID,newpass) => {
+        try {
+            console.log(userID,newpass)
+            const update ="UPDATE nguoidung SET MatKhau= ? WHERE MaNguoiDung = ?;"
+            const [pass] = await db.query(update,[newpass,userID])
+
+            return pass
+        } catch (error) {
+            console.log(error)
+           return null
         }
       
     },
