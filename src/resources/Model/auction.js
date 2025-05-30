@@ -3,9 +3,6 @@ const path = require('path')
 
 const db = require('../../config/connect_db');
 const { use } = require('passport');
-const { auction } = require('../Controller/user');
-// const { comic_delete } = require('../Controller/admin');
-
 
 
 const AuctionModel = {
