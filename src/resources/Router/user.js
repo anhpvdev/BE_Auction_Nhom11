@@ -5,7 +5,7 @@ const {authen} = require("../Middleware/authenticate");
 
 const UserController = require("../Controller/user")
 const passport = require('passport');
-
+const avatarupload = require("../Middleware/Uploads/avatar");
 
 const userRoutes = (app) => {
   router.get('/',authen([]),UserController.home)
@@ -22,11 +22,15 @@ const userRoutes = (app) => {
   router.get('/register',UserController.register)
   router.post('/register',UserController.register_post)
 
+
+  router.get('/user/password',authen(['ALL']),UserController.userPassword)
+  router.post('/user/password',authen(['ALL']),UserController.userChangePassword)
   router.get('/user/info',authen(['ALL']),UserController.userInfo)
-  router.post('/user/info',authen(['ALL']),UserController.userInfo_post)
+  router.post('/user/info',authen(['ALL']),avatarupload.single('avatar'),UserController.userInfo_post)
   router.get('/user/noti',authen(['ALL']),UserController.userNoti)
   router.get('/user/history',authen(['ALL']),UserController.history_auction)
-  router.get('/user/history/buy',authen(['ALL']),UserController.history_buybid)
+  router.get('/user/history/buy',authen(['ALL']),UserController.history_buy)
+  router.get('/user/history/bid',authen(['ALL']),UserController.history_bid)
 
   router.get('/bid-package',authen(['ALL']),UserController.bidPackage)
 
@@ -44,6 +48,8 @@ const userRoutes = (app) => {
   router.get('/auction/:id',authen(['ALL']),UserController.auction_now)
   router.get('/auction/detail/:id',authen(['ALL']),UserController.auction_now_detail)
   router.post('/auction/bid',authen(['ALL']),UserController.auction_bid)
+
+    router.get('/search/auction',UserController.auctionSearch)
   return app.use("/", router)
 }
 module.exports = userRoutes

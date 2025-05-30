@@ -97,6 +97,18 @@ const AuctionModel = {
       
     },
 
+    auction_search:async (key) => {
+        try {
+            var query = `SELECT p.MaPhienDauGia, p.TrangThai, p.MaSanPham , s.MaNguoiMua,n.HoVaTen,n.Avatar,s.TieuDe,DATE_FORMAT(s.NgayKetThuc, '%H:%i %d/%m/%Y') as NgayKetThuc  FROM phiendaugia as p LEFT JOIN sanphamdangky as s on s.MaSanPham = p.MaSanPham LEFT JOIN nguoidung as n on n.MaNguoiDung = s.MaNguoiMua WHERE s.TieuDe LIKE CONCAT('%', ?, '%') ORDER by s.NgayBatDau DESC;`
+            const [data] = await db.query(query,[key])
+
+            return data
+        } catch (error) {
+            console.log(error)
+        }
+      
+    },
+
     auction_detail:async (ID) => {
         try {
             var query = `SELECT s.MaSanPham,s.MaNguoiMua,s.MaDanhMuc,s.TieuDe,s.MoTa,s.NganSachToiDa,s.BuocGia,s.TrangThai,s.PhanHoi,DATE_FORMAT(s.NgayBatDau, '%Y-%m-%d %H:%i') AS NgayBatDau, DATE_FORMAT(s.NgayKetThuc, '%Y-%m-%d %H:%i') AS NgayKetThuc , n.HoVaTen,n.Avatar from sanphamdangky as s LEFT JOIN nguoidung as n on n.MaNguoiDung = s.MaNguoiMua WHERE MaSanPham = ?;`
@@ -245,6 +257,20 @@ WHERE ls.MaPhienDauGia = ? ORDER by ls.GiaDaDauGia ASC`
     history_buy:async (UserID) => {
         try {
             var query = `select * from thanhtoan where MaNguoiDung =?`
+            const [data] = await db.query(query,[UserID])
+
+            return data
+
+        } catch (error) {
+            console.log(error)
+           return []
+        }
+      
+    },
+
+    history_bid:async (UserID) => {
+        try {
+            var query = `SELECT MIN(l.GiaDaDauGia) as GiaDaDauGia,l.MaPhienDauGia, DATE_FORMAT(l.ThoiGianDauGia, '%H:%i %d/%m/%Y') as ThoiGian ,p.TrangThai,p.GiaThapNhat,p.MaNguoiBan, sp.TieuDe FROM lichsudaugia as l LEFT JOIN nguoidung as n on n.MaNguoiDung = l.MaNguoiBan LEFT JOIN phiendaugia as p on p.MaPhienDauGia = l.MaPhienDauGia LEFT JOIN sanphamdangky as sp on sp.MaSanPham = p.MaSanPham WHERE l.MaNguoiBan = ? GROUP BY l.MaPhienDauGia, l.MaNguoiBan ORDER BY l.ThoiGianDauGia DESC;`
             const [data] = await db.query(query,[UserID])
 
             return data

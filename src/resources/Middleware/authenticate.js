@@ -10,6 +10,7 @@ const authen = (roles = []) => {
             if (!token) {
                 if (roles.length == 0) {
                     req.user = null; // Cho phép truy cập mà không cần đăng nhập
+                    console.log("ok")
                     return next();
                 }else{
                     return res.redirect('/login')

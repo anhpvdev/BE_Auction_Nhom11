@@ -7,7 +7,7 @@ const storage = multer.diskStorage({
       res(null,path)
   },
   filename:(req,file,res)=>{
-    var userID = req.user.maNguoiDung
+    var userID = req.user.MaNguoiDung
     console.log(userID)
     let filename = userID+".jpg"
     res(null,filename)

@@ -9,7 +9,6 @@ const AuctionModel = require("../Model/auction")
 
 const stripe = require('stripe')(process.env.PAY_SECRET);
 const crypto = require('crypto');
-// const { url, console } = require('inspector');
 
 const UserServices = {
 
@@ -86,15 +85,13 @@ const UserServices = {
     login_google_post:async (req, res) => {
       try {
         const user = req.user
-  
+
         const user_cookie= {
-          id: user.maNguoiDung,
-          account: user.taiKhoan,
-          role: user.vaiTro,
-          avatar: user.anhDaiDien,
-          name:user.hoVaTen
+          ID: user.MaNguoiDung,
+          Email: user.Email,
+          role: user.VaiTro,
+          status:user.TrangThai
         }
-  
   
         const token = await jwt.sign(user_cookie, process.env.SECRET)
   
@@ -102,8 +99,7 @@ const UserServices = {
         res.cookie("AU2D_nt3h", token,{ httpOnly: true, maxAge: 60 * 60 * 1000 })
   
         // res.redirect("/admin")
-        const backUrl = req.cookies?.backUrl;
-        return res.redirect(backUrl)
+        return res.redirect('/')
       } catch (error) {
         console.log(error)
         return res.render("err.ejs")
@@ -134,12 +130,42 @@ const UserServices = {
     
      
     },
+
+    userPassword:async (req, res) => {
+      try{
+       const user = req.user
+        return res.render("Users/password.ejs",{user:user})
+      }catch(err){
+        console.log(err)
+        return res.render("err.ejs")
+      }
+     
+    },
+
+    userChangePassword:async (req, res) => {
+      try{
+       const userID = req.user.MaNguoiDung
+       const {pass} = req.body
+       const change = await UserModel.change_pass(userID,pass)
+
+       if(change.affectedRows < 1) return res.render("err.ejs")
+        return res.redirect('/user/info')
+      }catch(err){
+        console.log(err)
+        return res.render("err.ejs")
+      }
+     
+    },
   
 
     userInfo_post:async (req, res) => {
       try{
         const userID = req.user?.MaNguoiDung
         const {name,gender} = req.body
+
+        const new_image = req.file?.filename
+
+        if(new_image) await UserModel.update_avatar(userID,new_image)
 
         const update = await UserModel.update_info(name,gender,userID)
         if(update.affectedRows == 0) return res.render("err.ejs")
@@ -424,9 +450,9 @@ const UserServices = {
         console.log(error)
         return res.render("err.ejs")
       }  
-    },
+  },
 
-    history_buybid: async (req, res) => {
+  history_buy: async (req, res) => {
       try {
         const userID = req.user.MaNguoiDung
         const list = await  AuctionModel.history_buy(userID)
@@ -437,7 +463,36 @@ const UserServices = {
         console.log(error)
         return res.render("err.ejs")
       }  
-    },
+  },
+
+  history_bid: async (req, res) => {
+      try {
+        const userID = req.user.MaNguoiDung
+        const list = await  AuctionModel.history_bid(userID)
+
+        console.log(list)
+
+        return res.render("Users/history_bid.ejs",{user:req.user,list:list})
+
+      } catch (error) {
+        console.log(error)
+        return res.render("err.ejs")
+      }  
+  },
+
+  auctionSearch:async (req, res) => {
+      try{
+        const key = req.query.key
+
+        const list = await  AuctionModel.auction_search(key)
+
+        return res.status(200).json({status:'success',data:list})
+      }catch(err){
+        console.log(err)
+         return res.status(500).json({message:'Lỗi sever'})
+      }
+    
+  },
 
   
 }

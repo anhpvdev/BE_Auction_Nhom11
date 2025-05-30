@@ -133,3 +133,27 @@ button {
 
 }
 
+#search_box{
+    position: relative;
+}
+
+#search_list {
+    position: absolute;
+    background-color: #e6e6e6;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 700px;
+    padding: 10px;
+    border-radius: 10px;
+    display: none;
+    z-index: 99999;
+}
+#search_list.show{
+    display: block;
+}
+
+#search_list .item{
+    padding: 10px;
+    border-bottom: 2px solid orange;
+}
